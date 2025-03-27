@@ -239,7 +239,7 @@ module aes_top (
       SUB_R: next_state = (o_valid_sub) ? SHIFT_R : SUB_R;
       SHIFT_R: next_state = (o_valid_shift) ? MIX_R : SHIFT_R;
       MIX_R: next_state = ADD_R;
-      ADD_R: next_state = (round_counter == 10) ? SUB_F : SUB_R;
+      ADD_R: next_state = (round_counter == 9) ? SUB_F : SUB_R;
       SUB_F: next_state = (o_valid_sub) ? SHIFT_F : SUB_F;
       SHIFT_F: next_state = (o_valid_shift) ? ADD_F : SHIFT_F;
       ADD_F: next_state = DONE;

@@ -186,7 +186,7 @@ module tb_aes_top;
   //-------------------------------------------------------------------------
   initial begin
     // Wait until the core enters INIT state (AddRoundKey stage)
-    wait(uut.current_state == uut.o_valid_add);
+    wait(uut.i_start);
     @(posedge clk);
     #100;
     $display("At INIT stage (time %t):", $time);
@@ -254,22 +254,22 @@ module tb_aes_top;
       $display("PASS: ADD_R stage correct");
     else
       $display("FAIL: ADD_R stage, expected: %h, got: %h", exp_add, uut.state_reg);
-  end
+//  end
 
-//  //-------------------------------------------------------------------------
-//  // Final ciphertext check.
-//  //-------------------------------------------------------------------------
+  //-------------------------------------------------------------------------
+  // Final ciphertext check.
+  //-------------------------------------------------------------------------
 //  initial begin
-//    wait(o_valid);
-//    @(posedge clk);
-//    #100;
-//    $display("At DONE stage (time %t):", $time);
-//    if(o_ciphertext === 128'h69c4e0d86a7b0430d8cdb78070b4c55a)
-//      $display("PASS: Final ciphertext correct: %h", o_ciphertext);
-//    else
-//      $display("FAIL: Final ciphertext, expected: %h, got: %h",
-//               128'h69c4e0d86a7b0430d8cdb78070b4c55a, o_ciphertext);
-//    #10000;
+    wait(o_valid);
+    @(posedge clk);
+    #100;
+    $display("At DONE stage (time %t):", $time);
+    if(o_ciphertext === 128'h69c4e0d86a7b0430d8cdb78070b4c55a)
+      $display("PASS: Final ciphertext correct: %h", o_ciphertext);
+    else
+      $display("FAIL: Final ciphertext, expected: %h, got: %h",
+               128'h69c4e0d86a7b0430d8cdb78070b4c55a, o_ciphertext);
+    #10000;
 //    $finish;
-//end
+end
 endmodule
