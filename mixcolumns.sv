@@ -2,12 +2,13 @@ module mixcolumns #(
     parameter NB   = 4,      // Number of columns (matrix is NB x NB)
     parameter WORD = 8       // Size of each byte in bits
 )(
-    input  wire                    clk,
+    input  wire                    clk, 
+    output reg [NB*NB*WORD-1:0]      o_block,
     input  wire                    rst,      // Active high reset
     input  wire                    i_valid,
     input  wire [NB*NB*WORD-1:0]     i_block,  // 128-bit input state
-    output reg                     o_valid,
-    output reg [NB*NB*WORD-1:0]      o_block   // 128-bit output state
+    output reg                     o_valid
+      // 128-bit output state
 );
 
   // Function: Multiply by 2 in GF(2^8)

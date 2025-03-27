@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Organisation: University of Sheffield
 // Engineer: Vincent Mendy
@@ -26,10 +27,11 @@ module subbytes_generic (
     input  logic         rst_n,    // Active-low reset signal; forces the output to zero when low.
     input  logic         mode,     // Mode select: 0 selects forward S-box, 1 selects inverse S-box.
     input  logic [127:0] state,    // 128-bit input state (16 bytes) to be processed.
-    output logic [127:0] state_out // 128-bit output after applying the SubBytes substitution.
+    output logic [127:0] state_out, // 128-bit output after applying the SubBytes substitution.
+    output logic o_valid
 );
 
-  // Forward S-box lookup table: maps an 8-bit input to its substituted output value (AES spec).
+  // Forward S-box lookup table: maps an 8-bit input to its substituted output value (AES spec). Byte at a time
   localparam logic [7:0] sbox[0:255] = '{
       8'h63, 8'h7c, 8'h77, 8'h7b, 8'hf2, 8'h6b, 8'h6f, 8'hc5,
       8'h30, 8'h01, 8'h67, 8'h2b, 8'hfe, 8'hd7, 8'hab, 8'h76,
@@ -100,6 +102,20 @@ module subbytes_generic (
       8'h17, 8'h2B, 8'h04, 8'h7E, 8'hBA, 8'h77, 8'hD6, 8'h26,
       8'hE1, 8'h69, 8'h14, 8'h63, 8'h55, 8'h21, 8'h0C, 8'h7D
   };
+
+  logic [3:0] byte_counter; // Counter to track processed bytes
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      byte_counter <= 4'd0;
+    end else if (byte_counter < 4'd15) begin
+      byte_counter <= byte_counter + 1;
+    end else begin
+      byte_counter <= 4'd0; // Reset counter for next operation
+    end
+  end
+
+  assign o_valid = (byte_counter == 4'd15); // o_valid is high when all bytes are processed
 
   // Generate block: Creates 16 parallel always_ff blocks to process each byte of the 128-bit state.
   genvar i;  // 'genvar' is used for loop index generation in a generate block.

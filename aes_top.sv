@@ -15,33 +15,43 @@ module aes_top (
   parameter NR = 10;  // number of rounds
 
   //-------------------------------------------------------------------------
-  // Key Expansion: Generate the expanded key schedule.
-  // The aes_key_schedule module (from your file aes_key_expansion.v) produces
-  // a 1408-bit bus (11 round keys × 128 bits).
+  // Instantiation of the key expansion module.
+  // The module now outputs an array of 128-bit round keys.
   //-------------------------------------------------------------------------
-  wire [0:(128*(NR+1))-1] expanded_keys;
-  aes_key_schedule #(4, NR) u_key_schedule (
+  // Wire to collect the combinational output of key expansion
+  logic [127:0] round_keys_w [0:NR];
+
+  // Register array to latch the round keys for use during encryption
+  reg [127:0] round_keys_reg [0:NR];
+
+  aes_key_expansion #(4, NR) u_key_expansion (
       .seed_key(i_key),
-      .expanded_keys(expanded_keys)
+      .expanded_keys(round_keys_w)
   );
 
   //-------------------------------------------------------------------------
-  // Extract each 128-bit round key from the expanded key bus.
-  // The display testbench in aes_key_expansion_tb.v extracts the keys in this
-  // order. For round 0, the key is in bits [1407:1280], for round 1 [1279:1152], etc.
+  // Latch the expanded keys into registers.
+  // When i_start is asserted, capture all round keys from round_keys_w into
+  // round_keys_reg.  These registered values will be used throughout the
+  // encryption process.
   //-------------------------------------------------------------------------
-  wire [127:0] round_keys [0:NR];  // round_keys[0] ... round_keys[10]
-  genvar i;
-  generate
-    for (i = 0; i < (NR+1); i = i + 1) begin: round_key_extract
-      assign round_keys[i] = expanded_keys[1407 - i*128 -: 128];
+  integer j;
+  always_ff @(posedge clk or posedge rst) begin
+    if (rst) begin
+      for (j = 0; j <= NR; j = j + 1) begin
+        round_keys_reg[j] <= 128'd0;
+      end
+    end else if (i_start) begin
+      for (j = 0; j <= NR; j = j + 1) begin
+        round_keys_reg[j] <= round_keys_w[j];
+      end
     end
-  endgenerate
+  end
 
   //-------------------------------------------------------------------------
   // FSM states for running through all the rounds. The iterative datapath
-  // uses the same submodule instances (SubBytes, ShiftRows, MixColumns) and
-  // differentiates regular rounds from the final round (which omits MixColumns).
+  // uses the same submodule instances (SubBytes, ShiftRows, MixColumns)
+  // and differentiates regular rounds from the final round (which omits MixColumns).
   //-------------------------------------------------------------------------
   typedef enum logic [3:0] {
     IDLE,    // wait for i_start
@@ -76,18 +86,27 @@ module aes_top (
   wire [127:0] sub_out;
   wire [127:0] shift_out;
   wire [127:0] mix_out;
-
+  logic o_valid_sub;
+  logic o_valid_shift;
+  
+//    //-------------------------------------------------------------------------
+//  // Instantiate the add_roundkey module (add_roundkey.sv).
+//  //-------------------------------------------------------------------------
+//add_roundkey (
+//    .state (add_in_reg),      // 128-bit input representing the current AES state.
+//    .round_key(round_key),  // 128-bit round key used to modify the state.
+//    .state_out (add_out)   // 128-bit output after performing the bitwise XOR.
+//);
   //-------------------------------------------------------------------------
-  // Instantiate the SubBytes module (subbytes_generic.v).
-  // It uses active-low reset so we tie rst_n to ~rst.
-  // For encryption we use mode = 0.
+  // Instantiate the SubBytes module (active-low reset tied to ~rst).
   //-------------------------------------------------------------------------
   subbytes_generic u_subbytes (
     .clk      (clk),
     .rst_n    (~rst),
     .mode     (1'b0),       // forward mode for encryption
     .state    (sub_in_reg),
-    .state_out(sub_out)
+    .state_out(sub_out), // output of subbytes
+    .o_valid(o_valid_sub)
   );
 
   //-------------------------------------------------------------------------
@@ -98,7 +117,7 @@ module aes_top (
     .rst    (rst),
     .i_valid(1'b1),
     .i_block(shift_in_reg),
-    .o_valid(),         // valid signal not used in this example
+    .o_valid(o_valid_shift),         // valid signal not used in this example
     .o_block(shift_out)
   );
 
@@ -138,20 +157,24 @@ module aes_top (
 
         INIT: begin
           // Initial round: perform AddRoundKey with round key 0.
-          state_reg   <= i_plaintext ^ round_keys[0];
-          round_counter <= 1;  // Next round will be round key 1
+          state_reg   <= i_plaintext ^ round_keys_reg[0];
+          round_counter <= 1;  // Next round will use round_keys_reg[1]
         end
 
         SUB_R: begin
           // Regular round: SubBytes.
           sub_in_reg <= state_reg;
-          reg_sub    <= sub_out;
+          if (o_valid_sub) begin
+            reg_sub <= sub_out;
+          end
         end
 
         SHIFT_R: begin
           // Regular round: ShiftRows.
           shift_in_reg <= reg_sub;
-          reg_shift    <= shift_out;
+          if (o_valid_shift) begin
+            reg_shift    <= shift_out;
+          end
         end
 
         MIX_R: begin
@@ -161,26 +184,31 @@ module aes_top (
         end
 
         ADD_R: begin
-          // Regular round: AddRoundKey.
-          state_reg   <= reg_mix ^ round_keys[round_counter];
+          // Regular round: perform AddRoundKey with the latched key for the
+          // current round.
+          state_reg   <= reg_mix ^ round_keys_reg[round_counter];
           round_counter <= round_counter + 1;
         end
 
         SUB_F: begin
           // Final round (round 10): SubBytes.
           sub_in_reg <= state_reg;
-          reg_sub    <= sub_out;
+          if (o_valid_sub) begin
+            reg_sub <= sub_out;
+          end
         end
 
         SHIFT_F: begin
           // Final round: ShiftRows.
           shift_in_reg <= reg_sub;
-          reg_shift    <= shift_out;
+          if (o_valid_shift) begin
+            reg_shift    <= shift_out;
+          end
         end
 
         ADD_F: begin
           // Final round: AddRoundKey (no MixColumns).
-          state_reg <= reg_shift ^ round_keys[NR]; // round_keys[10]
+          state_reg <= reg_shift ^ round_keys_reg[NR]; // round_keys_reg[10]
         end
 
         DONE: begin
@@ -200,14 +228,14 @@ module aes_top (
     case (current_state)
       IDLE:  next_state = (i_start) ? INIT : IDLE;
       INIT:  next_state = SUB_R;
-      SUB_R: next_state = SHIFT_R;
-      SHIFT_R: next_state = MIX_R;
+      SUB_R: next_state = (o_valid_sub) ? SHIFT_R : SUB_R;
+      SHIFT_R: next_state = (o_valid_shift) ? MIX_R : SHIFT_R;
       MIX_R: next_state = ADD_R;
       ADD_R: next_state = (round_counter == 10) ? SUB_F : SUB_R;
-      SUB_F: next_state = SHIFT_F;
-      SHIFT_F: next_state = ADD_F;
+      SUB_F: next_state = (o_valid_sub) ? SHIFT_F : SUB_F;
+      SHIFT_F: next_state = (o_valid_shift) ? ADD_F : SHIFT_F;
       ADD_F: next_state = DONE;
-      DONE:  next_state = DONE;
+      DONE:  next_state = IDLE;  // Changed to return to IDLE after DONE
       default: next_state = IDLE;
     endcase
   end

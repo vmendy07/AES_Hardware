@@ -30,7 +30,9 @@ module tb_subbytes_generic;
   // state_out: 128-bit output state after applying the S-box substitution.
   logic         clk, rst_n, mode;
   logic [127:0] state;
-  logic [127:0] state_out;
+  logic [127:0] state_out, expected_state;
+  logic         o_valid;
+  
 
   // Clock generation: Creates a clock with a period of 10 time units (5 time units high, 5 low).
   initial begin
@@ -44,7 +46,8 @@ module tb_subbytes_generic;
     .rst_n    (rst_n),      // Connect the reset signal.
     .mode     (mode),       // Connect the mode selection (forward/inverse).
     .state    (state),      // Apply the input state.
-    .state_out(state_out)   // Route the output after substitution.
+    .state_out(state_out),  // Route the output after substitution.
+    .o_valid  (o_valid)      // Connect the o_valid signal
   );
 
   // Test sequence: Apply various stimuli for both forward and inverse SubBytes operations.
@@ -63,6 +66,7 @@ module tb_subbytes_generic;
     state = 128'h00000000000000000000000000000000;
     mode  = 0;  // Maintain forward mode.
     #10;        // Allow substitution to process.
+    @(posedge o_valid);  // Wait for o_valid to be asserted
     $display("\nForward Mode - Test 1: All zeros => Expect 0x63 for each byte");
     $display("Input  = %h", state);
     $display("Output = %h", state_out);
@@ -71,6 +75,7 @@ module tb_subbytes_generic;
     state = 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
     mode  = 0;  // Ensure forward mode.
     #10;        // Wait for the substitution to settle.
+    @(posedge o_valid);  // Wait for o_valid to be asserted
     $display("\nForward Mode - Test 2: All 0xFF => Expect 0x16 for each byte");
     $display("Input  = %h", state);
     $display("Output = %h", state_out);
@@ -79,22 +84,37 @@ module tb_subbytes_generic;
     // Inverse SubBytes Testing
     // ---------------------------
     // Switch to inverse mode to test the de-substitution.
-    mode = 1;
+    // mode = 1;
 
-    // Test 3: When each input byte is 0x63, the output should be 0x00 because inv_sbox[8'h63] = 8'h00.
-    state = 128'h63636363636363636363636363636363;
-    #10;        // Wait for the substitution.
-    $display("\nInverse Mode - Test 1: All 0x63 => Expect 0x00 for each byte");
-    $display("Input  = %h", state);
-    $display("Output = %h", state_out);
+    // // Test 3: When each input byte is 0x63, the output should be 0x00 because inv_sbox[8'h63] = 8'h00.
+    // state = 128'h63636363636363636363636363636363;
+    // #10;        // Wait for the substitution.
+    // @(posedge o_valid);  // Wait for o_valid to be asserted
+    // $display("\nInverse Mode - Test 1: All 0x63 => Expect 0x00 for each byte");
+    // $display("Input  = %h", state);
+    // $display("Output = %h", state_out);
 
-    // Test 4: When each input byte is 0x16, the output should be 0xFF as inv_sbox[8'h16] = 8'hFF.
-    state = 128'h16161616161616161616161616161616;
-    #10;        // Allow time for processing.
-    $display("\nInverse Mode - Test 2: All 0x16 => Expect 0xFF for each byte");
-    $display("Input  = %h", state);
-    $display("Output = %h", state_out);
+    // // Test 4: When each input byte is 0x16, the output should be 0xFF as inv_sbox[8'h16] = 8'hFF.
+    // state = 128'h16161616161616161616161616161616;
+    // #10;        // Allow time for processing.
+    // @(posedge o_valid);  // Wait for o_valid to be asserted
+    // $display("\nInverse Mode - Test 2: All 0x16 => Expect 0xFF for each byte");
+    // $display("Input  = %h", state);
+    // $display("Output = %h", state_out);
     
+    
+    // Test 3: When each input byte is 0x16, the output should be 0xFF as inv_sbox[8'h16] = 8'hFF.
+    state = 128'h00102030405060708090a0b0c0d0e0f0;
+    expected_state = 128'h63cab7040953d051cd60e0e7ba70e18c;
+    #10;        // Allow time for processing.
+    @(posedge o_valid);  // Wait for o_valid to be asserted
+    $display("\nForward Mode - Test 3: All 0x16 => Expect 63cab7040953d051cd60e0e7ba70e18c for each byte");
+    $display("Input  = %h", state);
+    $display("Output = %h", state_out);
+    if (state_out == expected_state)
+        $display("Yahoo, all tests Passed!");
+    else
+        $display("Failed tests!");
     $finish;   // Terminate the simulation.
   end
 

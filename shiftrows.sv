@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module shiftrows #(
     parameter NB   = 4,      // Number of columns (matrix is NB x NB)
     parameter WORD = 8       // Size of each byte in bits
@@ -50,14 +52,52 @@ module shiftrows #(
                             b8,  b13, b2,  b7,    // Column 2
                             b12, b1,  b6,  b11 }; // Column 3
 
-    // Register the output and pass the valid signal
+    typedef enum logic [1:0] {
+        IDLE,
+        PROCESSING
+    } state_t;
+
+    state_t current_state, next_state;
+
+    // State transition logic
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            current_state <= IDLE;
+        end else begin
+            current_state <= next_state;
+        end
+    end
+
+    // Next state logic
+    always_comb begin
+        next_state = current_state;
+        case (current_state)
+            IDLE: begin
+                if (i_valid) begin
+                    next_state = PROCESSING;
+                end
+            end
+            PROCESSING: begin
+                next_state = IDLE;
+            end
+        endcase
+    end
+
+    // Output logic
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             o_block <= '0;
             o_valid <= 1'b0;
         end else begin
-            o_block <= shift_result;
-            o_valid <= i_valid;
+            case (current_state)
+                PROCESSING: begin
+                    o_block <= shift_result;
+                    o_valid <= 1'b1;
+                end
+                default: begin
+                    o_valid <= 1'b0;
+                end
+            endcase
         end
     end
 

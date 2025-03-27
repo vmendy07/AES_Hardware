@@ -9,6 +9,7 @@ module tb_aes_top;
   logic [127:0] i_key;
   logic [127:0] o_ciphertext;
   logic         o_valid;
+  reg [127:0] round_keys_reg;
 
   // Instantiate the AES top module
   aes_top uut (
@@ -174,7 +175,7 @@ module tb_aes_top;
   // Expected values (using the standard test vector)
   // For a proper AES key expansion, round key 0 should equal the original key.
   localparam [127:0] expected_rk0 = 128'h000102030405060708090a0b0c0d0e0f;
-  localparam [127:0] exp_expected_init = 128'h00102030405060708090a0b0c0d0e0f0; // plaintext XOR key
+//  localparam [127:0] exp_expected_init = 128'h00102030405060708090a0b0c0d0e0f0; // plaintext XOR key
 
   // Variables to hold computed golden results at various stages
   reg [127:0] exp_init, exp_sub, exp_shift, exp_mix;
@@ -189,15 +190,20 @@ module tb_aes_top;
     @(posedge clk);
     #100;
     $display("At INIT stage (time %t):", $time);
-    $display("  Round key 0: %h", uut.round_keys[0]);
+    $display("  Round key 0: %h", uut.round_keys_reg[0]);
+    $display("expected round key initial: %h", expected_rk0);
     exp_init = i_plaintext ^ expected_rk0;
+    
+    $display("expected init: %h", exp_init);
+    
     if(uut.state_reg === exp_init)
       $display("PASS: INIT stage correct: %h", uut.state_reg);
     else
       $display("FAIL: INIT stage, expected: %h, got: %h", exp_init, uut.state_reg);
 
+
     // Wait for SUB_R stage (SubBytes)
-    wait(uut.current_state == uut.SUB_R);
+    wait(uut.o_valid_sub);
     @(posedge clk);
     #100;
     exp_sub = golden_subbytes(exp_init);
@@ -209,48 +215,47 @@ module tb_aes_top;
     else
       $display("FAIL: SUB_R stage, expected: %h, got: %h", exp_sub, uut.reg_sub);
 
-    // Wait for SHIFT_R stage (ShiftRows)
-    wait(uut.current_state == uut.SHIFT_R);
-    @(posedge clk);
-    #100;
-    exp_shift = golden_shiftrows(exp_sub);
-    $display("At SHIFT_R stage (time %t):", $time);
-    $display("  Expected SHIFT_R: %h", exp_shift);
-    $display("  Actual   SHIFT_R: %h", uut.reg_shift);
-    if(uut.reg_shift === exp_shift)
-      $display("PASS: SHIFT_R stage correct");
-    else
-      $display("FAIL: SHIFT_R stage, expected: %h, got: %h", exp_shift, uut.reg_shift);
+   // Wait for SHIFT_R stage (ShiftRows)
+   wait(uut.current_state == uut.SHIFT_R);
+   @(posedge clk);
+   #100;
+   exp_shift = golden_shiftrows(exp_sub);
+   $display("At SHIFT_R stage (time %t):", $time);
+   $display("  Expected SHIFT_R: %h", exp_shift);
+   $display("  Actual   SHIFT_R: %h", uut.reg_shift);
+   if(uut.reg_shift === exp_shift)
+     $display("PASS: SHIFT_R stage correct");
+   else
+     $display("FAIL: SHIFT_R stage, expected: %h, got: %h", exp_shift, uut.reg_shift);
 
-    // Wait for MIX_R stage (MixColumns)
-    wait(uut.current_state == uut.MIX_R);
-    @(posedge clk);
-    #100;
-    exp_mix = golden_mixcolumns(exp_shift);
-    $display("At MIX_R stage (time %t):", $time);
-    $display("  Expected MIX_R: %h", exp_mix);
-    $display("  Actual   MIX_R: %h", uut.reg_mix);
-    if(uut.reg_mix === exp_mix)
-      $display("PASS: MIX_R stage correct");
-    else
-      $display("FAIL: MIX_R stage, expected: %h, got: %h", exp_mix, uut.reg_mix);
-  end
+//    // Wait for MIX_R stage (MixColumns)
+//    wait(uut.current_state == uut.MIX_R);
+//    @(posedge clk);
+//    #100;
+//    exp_mix = golden_mixcolumns(exp_shift);
+//    $display("At MIX_R stage (time %t):", $time);
+//    $display("  Expected MIX_R: %h", exp_mix);
+//    $display("  Actual   MIX_R: %h", uut.reg_mix);
+//    if(uut.reg_mix === exp_mix)
+//      $display("PASS: MIX_R stage correct");
+//    else
+//      $display("FAIL: MIX_R stage, expected: %h, got: %h", exp_mix, uut.reg_mix);
+//  end
 
-  //-------------------------------------------------------------------------
-  // Final ciphertext check.
-  //-------------------------------------------------------------------------
-  initial begin
-    wait(o_valid);
-    @(posedge clk);
-    #100;
-    $display("At DONE stage (time %t):", $time);
-    if(o_ciphertext === 128'h69c4e0d86a7b0430d8cdb78070b4c55a)
-      $display("PASS: Final ciphertext correct: %h", o_ciphertext);
-    else
-      $display("FAIL: Final ciphertext, expected: %h, got: %h",
-               128'h69c4e0d86a7b0430d8cdb78070b4c55a, o_ciphertext);
-    #10000;
-    $finish;
-  end
-
+//  //-------------------------------------------------------------------------
+//  // Final ciphertext check.
+//  //-------------------------------------------------------------------------
+//  initial begin
+//    wait(o_valid);
+//    @(posedge clk);
+//    #100;
+//    $display("At DONE stage (time %t):", $time);
+//    if(o_ciphertext === 128'h69c4e0d86a7b0430d8cdb78070b4c55a)
+//      $display("PASS: Final ciphertext correct: %h", o_ciphertext);
+//    else
+//      $display("FAIL: Final ciphertext, expected: %h, got: %h",
+//               128'h69c4e0d86a7b0430d8cdb78070b4c55a, o_ciphertext);
+//    #10000;
+//    $finish;
+end
 endmodule

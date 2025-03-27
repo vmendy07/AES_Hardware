@@ -1,0 +1,12 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_key_expansion.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aes_key_expansion
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aes_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/mixcolumns.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mixcolumns
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/shiftrows.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shiftrows
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/subbytes_generic.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module subbytes_generic
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/tb_aes_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_aes_top

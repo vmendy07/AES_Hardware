@@ -1,17 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: University of Sheffield
-// Engineer: Ebranners
+// Organisation: University of Sheffield
+// Engineer: EBranners
 //
-// Create Date: 20.01.2025 23:48:03
-// Design Name: AES Key Schedule Testbench
-// Module Name: aes_key_schedule_tb
+// Module Name: aes_key_expansion_tb
 // Project Name: AES Project
 // Target Devices: FPGA
 // Tool Versions: Xilinx Vivado 2021.2
-// Description: Testbench for AES Key Schedule (formerly AES Key Expansion)
+// Description: Testbench for AES Key expansion (formerly AES Key Expansion)
 //
-// Dependencies: aes_key_schedule module
+// Dependencies: aes_key_expansion module
 //
 // Revision:
 // Revision 0.02 - Updated to match new module and variable names
@@ -21,38 +19,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-module aes_key_schedule_tb;
-    // Input 128-bit seed key for AES key scheduling (128-bit mode)
-    reg [127:0] seed_key;
-    
-    // Output: Expanded key schedule (44 words * 32 bits = 1408 bits)
-    wire [1407:0] expanded_keys;
+module aes_key_expansion_tb;
 
-    // Instantiate the AES key schedule module
-    aes_key_schedule #(4, 10) key_schedule_instance (
+    // 128-bit seed key for AES key scheduling (AES-128)
+    reg [127:0] seed_key;
+
+    // Output: Expanded keys as an array of 11 128-bit round keys
+    // (For AES-128 there are 11 round keys, round 0 to round 10)
+    logic [127:0] expanded_keys [0:10];
+
+    // Instantiate the AES key expansion module with parameters KEY_WORDS=4 and ROUNDS=10
+    aes_key_expansion #(4, 10) key_expansion_instance (
         .seed_key(seed_key),
         .expanded_keys(expanded_keys)
     );
 
-    // Task to display the expanded key words
+    // Task to display the expanded round keys
     task display_expanded_key;
         integer i;
         begin
             $display("------------------------------------------------------");
             $display("Seed Key: %h", seed_key);
-            $display("Generated Key Schedule:");
-            
-            // Loop through each of the 11 rounds and display the 4 words per round
-            for (i = 0; i < 11; i = i + 1) begin
-                $display("Round %2d:", i);  // Round number
-                // Display 4 words (128 bits) per round
-                $display("  expanded_keys[%0d]: %h %h %h %h", 
-                    i, 
-                    expanded_keys[(1407 - (i * 128)) -: 32], 
-                    expanded_keys[(1375 - (i * 128)) -: 32], 
-                    expanded_keys[(1343 - (i * 128)) -: 32], 
-                    expanded_keys[(1311 - (i * 128)) -: 32]
-                );
+            $display("Generated Round Keys:");
+            for (i = 0; i <= 10; i = i + 1) begin
+                $display("Round %2d: %h", i, expanded_keys[i]);
             end
             $display("------------------------------------------------------\n");
         end
@@ -89,13 +79,19 @@ module aes_key_schedule_tb;
         seed_key = 128'h1234567890abcdef1234567890abcdef;  
         #10;  
         display_expanded_key;
+        
+        // Test Case 7: Another random key
+        seed_key = 128'h000102030405060708090a0b0c0d0e0f;  
+        #10;  
+        display_expanded_key;
 
-        $stop;  
+        $stop;
     end
+
 endmodule
 
-
-
+//13111d7fe3944a17f307a78b4d2b30c5
+//13111d7fe3944a17f307a78b4d2b30c5
 
 
 

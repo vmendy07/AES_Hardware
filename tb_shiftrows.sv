@@ -63,13 +63,18 @@ module tb_shiftrows;
     endfunction
 
     // Task to run an individual test.
-    // It applies the test vector, waits a cycle, then checks the output.
+    // It applies the test vector, waits for o_valid, then checks the output.
     task run_test(input [127:0] test_vector, input [127:0] expected, input int test_num);
       begin
         $display("\n********** Test %0d **********", test_num);
         i_valid = 1;
         i_block = test_vector;
         @(posedge clk);
+        i_valid = 0; // Deassert i_valid after one cycle
+
+        // Wait for o_valid to be asserted
+        @(posedge o_valid);
+
         // Short delay to allow the pipelined output to settle.
         #1;
         if (o_block === expected)
@@ -80,7 +85,6 @@ module tb_shiftrows;
                     test_num, expected, o_block);
            $fatal;
         end
-        i_valid = 0;
         // Wait a couple of cycles before beginning the next test.
         repeat(2) @(posedge clk);
       end
@@ -135,7 +139,6 @@ module tb_shiftrows;
 
         // Test 5: Random test.
         // Generate a random 128-bit vector and compute the expected output using the golden model.
-
         rand_vector = { $urandom, $urandom, $urandom, $urandom };
         run_test(rand_vector, golden_shiftrows(rand_vector), 5);
 
