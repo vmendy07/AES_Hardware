@@ -4,8 +4,6 @@ module shiftrows #(
     parameter NB   = 4,      // Number of columns (matrix is NB x NB)
     parameter WORD = 8       // Size of each byte in bits
 )(
-    input  logic               clk,
-    input  logic               rst,      // Active high reset
     input  logic               i_valid,
     input  logic [NB*NB*WORD-1:0] i_block, // 128-bit input state
     output logic               o_valid,
@@ -46,59 +44,12 @@ module shiftrows #(
     // Column 2: S'[0,2]=b8, S'[1,2]=b13, S'[2,2]=b2, S'[3,2]=b7
     // Column 3: S'[0,3]=b12, S'[1,3]=b1, S'[2,3]=b6, S'[3,3]=b11
 
-    wire [NB*NB*WORD-1:0] shift_result;
-    assign shift_result = { b0,  b5,  b10, b15,   // Column 0
-                            b4,  b9,  b14, b3,    // Column 1
-                            b8,  b13, b2,  b7,    // Column 2
-                            b12, b1,  b6,  b11 }; // Column 3
+    assign o_block = { b0,  b5,  b10, b15,   // Column 0
+                       b4,  b9,  b14, b3,    // Column 1
+                       b8,  b13, b2,  b7,    // Column 2
+                       b12, b1,  b6,  b11 }; // Column 3
 
-    typedef enum logic [1:0] {
-        IDLE,
-        PROCESSING
-    } state_t;
-
-    state_t current_state, next_state;
-
-    // State transition logic
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin
-            current_state <= IDLE;
-        end else begin
-            current_state <= next_state;
-        end
-    end
-
-    // Next state logic
-    always_comb begin
-        next_state = current_state;
-        case (current_state)
-            IDLE: begin
-                if (i_valid) begin
-                    next_state = PROCESSING;
-                end
-            end
-            PROCESSING: begin
-                next_state = IDLE;
-            end
-        endcase
-    end
-
-    // Output logic
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin
-            o_block <= '0;
-            o_valid <= 1'b0;
-        end else begin
-            case (current_state)
-                PROCESSING: begin
-                    o_block <= shift_result;
-                    o_valid <= 1'b1;
-                end
-                default: begin
-                    o_valid <= 1'b0;
-                end
-            endcase
-        end
-    end
+    // Output valid signal is directly tied to input valid
+    assign o_valid = i_valid;
 
 endmodule 

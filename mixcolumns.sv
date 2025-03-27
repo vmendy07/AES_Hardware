@@ -1,14 +1,13 @@
+`timescale 1ns / 1ps
+
 module mixcolumns #(
     parameter NB   = 4,      // Number of columns (matrix is NB x NB)
     parameter WORD = 8       // Size of each byte in bits
 )(
-    input  wire                    clk, 
-    output reg [NB*NB*WORD-1:0]      o_block,
-    input  wire                    rst,      // Active high reset
-    input  wire                    i_valid,
-    input  wire [NB*NB*WORD-1:0]     i_block,  // 128-bit input state
-    output reg                     o_valid
-      // 128-bit output state
+    input  wire [NB*NB*WORD-1:0] i_block,  // 128-bit input state
+    input  wire                  i_valid,
+    output logic [NB*NB*WORD-1:0] o_block,  // 128-bit output state
+    output logic                  o_valid
 );
 
   // Function: Multiply by 2 in GF(2^8)
@@ -76,21 +75,12 @@ module mixcolumns #(
   wire [WORD-1:0] r3_3 = (xtime(a0_3) ^ a0_3) ^ a1_3 ^ a2_3 ^ xtime(a3_3);
 
   // Combine the computed columns into a 128-bit result.
-  wire [127:0] mix_result;
-  assign mix_result = { r0_0, r1_0, r2_0, r3_0,
-                        r0_1, r1_1, r2_1, r3_1,
-                        r0_2, r1_2, r2_2, r3_2,
-                        r0_3, r1_3, r2_3, r3_3 };
+  assign o_block = { r0_0, r1_0, r2_0, r3_0,
+                     r0_1, r1_1, r2_1, r3_1,
+                     r0_2, r1_2, r2_2, r3_2,
+                     r0_3, r1_3, r2_3, r3_3 };
 
-  // Register the output with the valid signal.
-  always @(posedge clk or posedge rst) begin
-    if (rst) begin
-      o_block <= 128'd0;
-      o_valid <= 1'b0;
-    end else begin
-      o_block <= mix_result;
-      o_valid <= i_valid;
-    end
-  end
+  // Pass the valid signal through.
+  assign o_valid = i_valid;
 
 endmodule 

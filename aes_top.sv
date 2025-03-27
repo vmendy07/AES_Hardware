@@ -84,10 +84,11 @@ module aes_top (
 
   // Wires for submodule outputs.
   wire [127:0] sub_out;
-  wire [127:0] shift_out;
-  wire [127:0] mix_out;
+  logic [127:0] shift_out;
+  logic [127:0] mix_out;
   logic o_valid_sub;
   logic o_valid_shift;
+  logic o_valid_mix;
   
 //    //-------------------------------------------------------------------------
 //  // Instantiate the add_roundkey module (add_roundkey.sv).
@@ -113,9 +114,7 @@ module aes_top (
   // Instantiate the ShiftRows module (shiftrows.sv).
   //-------------------------------------------------------------------------
   shiftrows u_shiftrows (
-    .clk    (clk),
-    .rst    (rst),
-    .i_valid(1'b1),
+    .i_valid(o_valid_sub),
     .i_block(shift_in_reg),
     .o_valid(o_valid_shift),         // valid signal not used in this example
     .o_block(shift_out)
@@ -125,13 +124,14 @@ module aes_top (
   // Instantiate the MixColumns module (mixcolumns.sv).
   //-------------------------------------------------------------------------
   mixcolumns u_mixcolumns (
-    .clk    (clk),
-    .rst    (rst),
-    .i_valid(1'b1),
-    .i_block(mix_in_reg),
-    .o_valid(),
+    .i_valid(o_valid_shift),
+    .i_block(shift_out),
+    .o_valid(o_valid_mix),
     .o_block(mix_out)
   );
+
+  // Add a new signal for AddRoundKey valid
+  logic o_valid_add;
 
   //-------------------------------------------------------------------------
   // FSM: Sequential logic driving the iterative AES datapath.
@@ -148,22 +148,26 @@ module aes_top (
       sub_in_reg    <= 128'd0;
       shift_in_reg  <= 128'd0;
       mix_in_reg    <= 128'd0;
+      o_valid_add   <= 0;  // Initialize the AddRoundKey valid signal
     end else begin
       current_state <= next_state;
       case (current_state)
         IDLE: begin
           // Nothing to capture until i_start is asserted.
+          o_valid_add <= 0;
         end
 
         INIT: begin
           // Initial round: perform AddRoundKey with round key 0.
           state_reg   <= i_plaintext ^ round_keys_reg[0];
           round_counter <= 1;  // Next round will use round_keys_reg[1]
+          o_valid_add <= 1;  // Set valid signal for AddRoundKey
         end
 
         SUB_R: begin
           // Regular round: SubBytes.
           sub_in_reg <= state_reg;
+          o_valid_add <= 0;
           if (o_valid_sub) begin
             reg_sub <= sub_out;
           end
@@ -180,7 +184,7 @@ module aes_top (
         MIX_R: begin
           // Regular round: MixColumns.
           mix_in_reg <= reg_shift;
-          reg_mix    <= mix_out;
+          reg_mix    <= mix_out; // not needed?
         end
 
         ADD_R: begin
@@ -188,11 +192,13 @@ module aes_top (
           // current round.
           state_reg   <= reg_mix ^ round_keys_reg[round_counter];
           round_counter <= round_counter + 1;
+          o_valid_add <= 1;  // Set valid signal for AddRoundKey
         end
 
         SUB_F: begin
           // Final round (round 10): SubBytes.
           sub_in_reg <= state_reg;
+          o_valid_add <= 0;
           if (o_valid_sub) begin
             reg_sub <= sub_out;
           end
@@ -209,10 +215,12 @@ module aes_top (
         ADD_F: begin
           // Final round: AddRoundKey (no MixColumns).
           state_reg <= reg_shift ^ round_keys_reg[NR]; // round_keys_reg[10]
+          o_valid_add <= 1;  // Set valid signal for AddRoundKey
         end
 
         DONE: begin
           // Encryption complete. The final ciphertext is in state_reg.
+          o_valid_add <= 0;
         end
 
         default: ;

@@ -148,10 +148,10 @@ module tb_aes_top;
       a1 = col[23:16];
       a2 = col[15:8];
       a3 = col[7:0];
-      r0 = golden_xtime(a0) ^ a1 ^ a2 ^ a3;
-      r1 = golden_xtime(a1) ^ a0 ^ a2 ^ a3;
-      r2 = golden_xtime(a2) ^ a0 ^ a1 ^ a3;
-      r3 = golden_xtime(a3) ^ a0 ^ a1 ^ a2;
+      r0 = golden_xtime(a0) ^ (golden_xtime(a1) ^ a1) ^ a2 ^ a3;
+      r1 = a0 ^ golden_xtime(a1) ^ (golden_xtime(a2) ^ a2) ^ a3;
+      r2 = a0 ^ a1 ^ golden_xtime(a2) ^ (golden_xtime(a3) ^ a3);
+      r3 = (golden_xtime(a0) ^ a0) ^ a1 ^ a2 ^ golden_xtime(a3);
       golden_mixcolumn = { r0, r1, r2, r3 };
     end
   endfunction
@@ -178,7 +178,7 @@ module tb_aes_top;
 //  localparam [127:0] exp_expected_init = 128'h00102030405060708090a0b0c0d0e0f0; // plaintext XOR key
 
   // Variables to hold computed golden results at various stages
-  reg [127:0] exp_init, exp_sub, exp_shift, exp_mix;
+  reg [127:0] exp_init, exp_sub, exp_shift, exp_mix, exp_add;
 
   //-------------------------------------------------------------------------
   // Monitor intermediate stage results. These use hierarchical references to
@@ -186,7 +186,7 @@ module tb_aes_top;
   //-------------------------------------------------------------------------
   initial begin
     // Wait until the core enters INIT state (AddRoundKey stage)
-    wait(uut.current_state == uut.INIT);
+    wait(uut.current_state == uut.o_valid_add);
     @(posedge clk);
     #100;
     $display("At INIT stage (time %t):", $time);
@@ -201,7 +201,7 @@ module tb_aes_top;
     else
       $display("FAIL: INIT stage, expected: %h, got: %h", exp_init, uut.state_reg);
 
-
+    $display("------Starting SubBytes------");
     // Wait for SUB_R stage (SubBytes)
     wait(uut.o_valid_sub);
     @(posedge clk);
@@ -214,33 +214,47 @@ module tb_aes_top;
       $display("PASS: SUB_R stage correct");
     else
       $display("FAIL: SUB_R stage, expected: %h, got: %h", exp_sub, uut.reg_sub);
+   
+   $display("------Starting ShiftRows------");
+    // Wait for SHIFT_R stage (ShiftRows)
+    wait(uut.o_valid_shift);
+    @(posedge clk);
+    exp_shift = golden_shiftrows(exp_sub);
+    $display("At SHIFT_R stage (time %t):", $time);
+    $display("  Expected SHIFT_R: %h", exp_shift);
+    $display("  Actual   SHIFT_R: %h", uut.shift_out);
+    if(uut.shift_out === exp_shift)
+      $display("PASS: SHIFT_R stage correct");
+    else
+      $display("FAIL: SHIFT_R stage, expected: %h, got: %h", exp_shift, uut.shift_out);
 
-   // Wait for SHIFT_R stage (ShiftRows)
-   wait(uut.current_state == uut.SHIFT_R);
-   @(posedge clk);
-   #100;
-   exp_shift = golden_shiftrows(exp_sub);
-   $display("At SHIFT_R stage (time %t):", $time);
-   $display("  Expected SHIFT_R: %h", exp_shift);
-   $display("  Actual   SHIFT_R: %h", uut.reg_shift);
-   if(uut.reg_shift === exp_shift)
-     $display("PASS: SHIFT_R stage correct");
-   else
-     $display("FAIL: SHIFT_R stage, expected: %h, got: %h", exp_shift, uut.reg_shift);
+    $display("------Starting MixColumns------");
+    // Wait for MIX_R stage (MixColumns)
+    wait(uut.o_valid_mix);
+    @(posedge clk);
+    exp_mix = golden_mixcolumns(exp_shift);
+    $display("At MIX_R stage (time %t):", $time);
+    $display("  Expected MIX_R: %h", exp_mix);
+    $display("  Actual   MIX_R: %h", uut.mix_out);
+    if(uut.mix_out === exp_mix)
+      $display("PASS: MIX_R stage correct");
+    else
+      $display("FAIL: MIX_R stage, expected: %h, got: %h", exp_mix, uut.mix_out);
 
-//    // Wait for MIX_R stage (MixColumns)
-//    wait(uut.current_state == uut.MIX_R);
-//    @(posedge clk);
-//    #100;
-//    exp_mix = golden_mixcolumns(exp_shift);
-//    $display("At MIX_R stage (time %t):", $time);
-//    $display("  Expected MIX_R: %h", exp_mix);
-//    $display("  Actual   MIX_R: %h", uut.reg_mix);
-//    if(uut.reg_mix === exp_mix)
-//      $display("PASS: MIX_R stage correct");
-//    else
-//      $display("FAIL: MIX_R stage, expected: %h, got: %h", exp_mix, uut.reg_mix);
-//  end
+    $display("------Starting AddRoundKey------");
+    // Wait for ADD_R stage (AddRoundKey)
+    exp_add = exp_mix ^ uut.round_keys_reg[uut.round_counter];
+    wait(uut.o_valid_add);
+    @(posedge clk);
+   
+    $display("At ADD_R stage (time %t):", $time);
+    $display("  Expected ADD_R: %h", exp_add);
+    $display("  Actual   ADD_R: %h", uut.state_reg);
+    if(uut.state_reg === exp_add)
+      $display("PASS: ADD_R stage correct");
+    else
+      $display("FAIL: ADD_R stage, expected: %h, got: %h", exp_add, uut.state_reg);
+  end
 
 //  //-------------------------------------------------------------------------
 //  // Final ciphertext check.
@@ -257,5 +271,5 @@ module tb_aes_top;
 //               128'h69c4e0d86a7b0430d8cdb78070b4c55a, o_ciphertext);
 //    #10000;
 //    $finish;
-end
+//end
 endmodule
