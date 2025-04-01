@@ -88,7 +88,7 @@ module aes_top (
   logic [127:0] mix_out;
   logic o_valid_sub;
   logic o_valid_shift;
-  logic o_valid_mix;
+  logic o_valid_mix, o_valid_add;
   
 //    //-------------------------------------------------------------------------
 //  // Instantiate the add_roundkey module (add_roundkey.sv).
@@ -104,6 +104,7 @@ module aes_top (
   subbytes_generic u_subbytes (
     .clk      (clk),
     .rst_n    (~rst),
+//    .i_valid(o_valid_add),
     .mode     (1'b0),       // forward mode for encryption
     .state    (sub_in_reg),
     .state_out(sub_out), // output of subbytes

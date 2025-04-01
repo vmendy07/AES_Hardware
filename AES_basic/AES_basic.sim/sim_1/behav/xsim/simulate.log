@@ -1,0 +1,30 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+/// Starting encryption at time                25000
+At INIT stage (time                35100):
+  Round key 0: 000102030405060708090a0b0c0d0e0f
+expected round key initial: 000102030405060708090a0b0c0d0e0f
+expected init: 00102030405060708090a0b0c0d0e0f0
+PASS: INIT stage correct: 00102030405060708090a0b0c0d0e0f0
+------Starting SubBytes------
+At SUB_R stage (time               165100):
+  Expected SUB_R: 63cab7040953d051cd60e0e7ba70e18c
+  Actual   SUB_R: 63cab7040953d051cd60e0e7ba70e18c
+PASS: SUB_R stage correct
+------Starting ShiftRows------
+At SHIFT_R stage (time               325000):
+  Expected SHIFT_R: 6353e08c0960e104cd70b751bacad0e7
+  Actual   SHIFT_R: 6353e08c0960e104cd70b751bacad0e7
+PASS: SHIFT_R stage correct
+------Starting MixColumns------
+At MIX_R stage (time               335000):
+  Expected MIX_R: 5f72641557f5bc92f7be3b291db9f91a
+  Actual   MIX_R: 5f72641557f5bc92f7be3b291db9f91a
+PASS: MIX_R stage correct
+------Starting AddRoundKey------
+At ADD_R stage (time               355000):
+  Expected ADD_R: 89d810e8855ace682d1843d8cb128fe4
+  Actual   ADD_R: 89d810e8855ace682d1843d8cb128fe4
+PASS: ADD_R stage correct
+At DONE stage (time              3225100):
+PASS: Final ciphertext correct: 69c4e0d86a7b0430d8cdb78070b4c55a

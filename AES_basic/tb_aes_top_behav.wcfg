@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_aes_top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_aes_top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="118201fs"></ZoomEndTime>
+      <Cursor1Time time="45200fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="182"></NameColumnWidth>
+      <ValueColumnWidth column_width="258"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="40" />
+   <wvobject fp_name="/tb_aes_top/uut/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/current_state" type="array">
+      <obj_property name="ElementShortName">current_state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">current_state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/shift_out" type="array">
+      <obj_property name="ElementShortName">shift_out[127:0]</obj_property>
+      <obj_property name="ObjectShortName">shift_out[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/o_valid_shift" type="logic">
+      <obj_property name="ElementShortName">o_valid_shift</obj_property>
+      <obj_property name="ObjectShortName">o_valid_shift</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/round_counter" type="array">
+      <obj_property name="ElementShortName">round_counter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">round_counter[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/o_valid_add" type="logic">
+      <obj_property name="ElementShortName">o_valid_add</obj_property>
+      <obj_property name="ObjectShortName">o_valid_add</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/exp_mix" type="array">
+      <obj_property name="ElementShortName">exp_mix[127:0]</obj_property>
+      <obj_property name="ObjectShortName">exp_mix[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/reg_mix" type="array">
+      <obj_property name="ElementShortName">reg_mix[127:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_mix[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/exp_add" type="array">
+      <obj_property name="ElementShortName">exp_add[127:0]</obj_property>
+      <obj_property name="ObjectShortName">exp_add[127:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider2589">
+      <obj_property name="label">mix columns</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_mixcolumns/i_valid" type="logic">
+      <obj_property name="ElementShortName">i_valid</obj_property>
+      <obj_property name="ObjectShortName">i_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_mixcolumns/o_valid" type="logic">
+      <obj_property name="ElementShortName">o_valid</obj_property>
+      <obj_property name="ObjectShortName">o_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_mixcolumns/i_block" type="array">
+      <obj_property name="ElementShortName">i_block[127:0]</obj_property>
+      <obj_property name="ObjectShortName">i_block[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/mix_out" type="array">
+      <obj_property name="ElementShortName">mix_out[127:0]</obj_property>
+      <obj_property name="ObjectShortName">mix_out[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_mixcolumns/o_block" type="array">
+      <obj_property name="ElementShortName">o_block[127:0]</obj_property>
+      <obj_property name="ObjectShortName">o_block[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/state_reg" type="array">
+      <obj_property name="ElementShortName">state_reg[127:0]</obj_property>
+      <obj_property name="ObjectShortName">state_reg[127:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider2802">
+      <obj_property name="label">Key expansion</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/seed_key" type="array">
+      <obj_property name="ElementShortName">seed_key[0:127]</obj_property>
+      <obj_property name="ObjectShortName">seed_key[0:127]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/expanded_keys" type="array">
+      <obj_property name="ElementShortName">expanded_keys[0:10][127:0]</obj_property>
+      <obj_property name="ObjectShortName">expanded_keys[0:10][127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/key_schedule" type="array">
+      <obj_property name="ElementShortName">key_schedule[0:43][31:0]</obj_property>
+      <obj_property name="ObjectShortName">key_schedule[0:43][31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/temp_word" type="array">
+      <obj_property name="ElementShortName">temp_word[31:0]</obj_property>
+      <obj_property name="ObjectShortName">temp_word[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/rotated" type="array">
+      <obj_property name="ElementShortName">rotated[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rotated[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/substituted" type="array">
+      <obj_property name="ElementShortName">substituted[31:0]</obj_property>
+      <obj_property name="ObjectShortName">substituted[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/round_const" type="array">
+      <obj_property name="ElementShortName">round_const[31:0]</obj_property>
+      <obj_property name="ObjectShortName">round_const[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/j" type="array">
+      <obj_property name="ElementShortName">j[31:0]</obj_property>
+      <obj_property name="ObjectShortName">j[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/KEY_WORDS" type="array">
+      <obj_property name="ElementShortName">KEY_WORDS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">KEY_WORDS[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_key_expansion/ROUNDS" type="array">
+      <obj_property name="ElementShortName">ROUNDS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ROUNDS[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider2814">
+      <obj_property name="label">Bease</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/reg_sub" type="array">
+      <obj_property name="ElementShortName">reg_sub[127:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_sub[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/o_valid_add" type="logic">
+      <obj_property name="ElementShortName">o_valid_add</obj_property>
+      <obj_property name="ObjectShortName">o_valid_add</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider2848">
+      <obj_property name="label">SubBytes</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/mode" type="logic">
+      <obj_property name="ElementShortName">mode</obj_property>
+      <obj_property name="ObjectShortName">mode</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/state" type="array">
+      <obj_property name="ElementShortName">state[127:0]</obj_property>
+      <obj_property name="ObjectShortName">state[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/state_out" type="array">
+      <obj_property name="ElementShortName">state_out[127:0]</obj_property>
+      <obj_property name="ObjectShortName">state_out[127:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/o_valid" type="logic">
+      <obj_property name="ElementShortName">o_valid</obj_property>
+      <obj_property name="ObjectShortName">o_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/sbox" type="array">
+      <obj_property name="ElementShortName">sbox[0:255][7:0]</obj_property>
+      <obj_property name="ObjectShortName">sbox[0:255][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/inv_sbox" type="array">
+      <obj_property name="ElementShortName">inv_sbox[0:255][7:0]</obj_property>
+      <obj_property name="ObjectShortName">inv_sbox[0:255][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/u_subbytes/i_valid" type="logic">
+      <obj_property name="ElementShortName">i_valid</obj_property>
+      <obj_property name="ObjectShortName">i_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_aes_top/uut/shift_in_reg" type="array">
+      <obj_property name="ElementShortName">shift_in_reg[127:0]</obj_property>
+      <obj_property name="ObjectShortName">shift_in_reg[127:0]</obj_property>
+   </wvobject>
+</wave_config>

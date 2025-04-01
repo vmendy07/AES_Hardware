@@ -1,0 +1,506 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Thu Mar 27 22:40:09 2025
+# Process ID: 17200
+# Current directory: F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/AES_basic/AES_basic.runs/synth_1
+# Command line: vivado.exe -log aes_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source aes_top.tcl
+# Log file: F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/AES_basic/AES_basic.runs/synth_1/aes_top.vds
+# Journal file: F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/AES_basic/AES_basic.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source aes_top.tcl -notrace
+create_project: Time (s): cpu = 00:00:02 ; elapsed = 00:00:07 . Memory (MB): peak = 438.219 ; gain = 152.035
+Command: synth_design -top aes_top -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 49532 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 700.605 ; gain = 237.246
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'aes_top' [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_top.sv:1]
+	Parameter NR bound to: 10 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'aes_key_expansion' [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_key_expansion.sv:24]
+	Parameter KEY_WORDS bound to: 4 - type: integer 
+	Parameter ROUNDS bound to: 10 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'aes_key_expansion' (1#1) [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_key_expansion.sv:24]
+INFO: [Synth 8-6157] synthesizing module 'subbytes_generic' [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/subbytes_generic.sv:25]
+	Parameter sbox bound to: 2048'b01100011011111000111011101111011111100100110101101101111110001010011000000000001011001110010101111111110110101111010101101110110110010101000001011001001011111011111101001011001010001111111000010101101110101001010001010101111100111001010010001110010110000001011011111111101100100110010011000110110001111111111011111001100001101001010010111100101111100010111000111011000001100010001010100000100110001110010001111000011000110001001011000000101100110100000011100010010100000001110001011101011001001111011001001110101000010011000001100101100000110100001101101101110010110101010000001010010001110111101011010110011001010011110001100101111100001000101001111010001000000001110110100100000111111001011000101011011011010101100101110111110001110010100101001001100010110001100111111010000111011111010101011111011010000110100110100110011100001010100010111111001000000100111111101010000001111001001111110101000010100011010001101000000100011111001001010011101001110001111010110111100101101101101101000100001000100001111111111110011110100101100110100001100000100111110110001011111100101110100010000010111110001001010011101111110001111010110010001011101000110010111001101100000100000010100111111011100001000100010101010010000100010000100011011101110101110000001010011011110010111100000101111011011111000000011001000111010000010100100100100000110001001000101110011000010110100111010110001100010100100011001010111100100011110011110011111001000001101110110110110001101110101010100111010101001011011000101011011110100111010100110010101111010101011100000100010111010011110000010010100101110000111001010011010110100110001101110100011011101011101000001111101001011101111011000101110001010011100000011111010110101011001100100100000000011111101100000111001100001001101010101011110111001100001101100000100011101100111101110000111111000100110000001000101101001110110011000111010010100100110110001111010000111111010011100111001010101001010001101111110001100101000011000100100001101101111111110011001000010011010000100000110011001001011010000111110110000010101001011101100010110 
+	Parameter inv_sbox bound to: 2048'b01010010000010010110101011010101001100000011011010100101001110001011111101000000101000111001111010000001111100111101011111111011011111001110001100111001100000101001101100101111111111111000011100110100100011100100001101000100110001001101111011101001110010110101010001111011100101000011001010100110110000100010001100111101111011100100110010010101000010110100001011111010110000110100111000001000001011101010000101100110001010001101100100100100101100100111011001011011101000100100100101101101100010111101000100100101011100101111100011110110011001001000011001101000100110000001011011010100101001000101110011001100010111010110010110110110100100100110110001110000010010000101000011111101111011011011100111011010010111100001010101000110010101111010011110001101100111011000010010010000110110001010101100000000100011001011110011010011000010101111011111100100010110000000010110111000101100110100010100000110110100000010110000011110100011111100101000111111000011110000001011000001101011111011110100000011000000010001001110001010011010110011101010010001000100010100000101001111011001111101110011101010100101111111001011001111110011101111000010110100111001100111001110010110101011000111010000100010111001111010110100110101100001011110001011111001001101111110100000011100011101011101111101101110010001111111000100011010011100010001110100101001110001011000100101101111101101110110001000001110101010100001100010111110000110111111110001010110001111100100101111000110110100100111100100100000100110101101101111000000111111100111100011001101010110101111010000011111110111011010100000110011100010000000011111000111001100011011000100010010000100000101100100100111100000001110110001011111011000000101000101111111101010010001100110110101010010100000110100101101111001010111101010011111100100111100100110011100111011111010000011100000001110110100110110101110001010101111010110110000110010001110101110111011001111001000001101010011100110010110000100010111001010110000010001111110101110100111011111010110001001101110000101101001000101000110001101010101001000010000110001111101 
+INFO: [Synth 8-6155] done synthesizing module 'subbytes_generic' (2#1) [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/subbytes_generic.sv:25]
+INFO: [Synth 8-6157] synthesizing module 'shiftrows' [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/shiftrows.sv:3]
+	Parameter NB bound to: 4 - type: integer 
+	Parameter WORD bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'shiftrows' (3#1) [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/shiftrows.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'mixcolumns' [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/mixcolumns.sv:3]
+	Parameter NB bound to: 4 - type: integer 
+	Parameter WORD bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'mixcolumns' (4#1) [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/mixcolumns.sv:3]
+WARNING: [Synth 8-6014] Unused sequential element mix_in_reg_reg was removed.  [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_top.sv:150]
+WARNING: [Synth 8-6014] Unused sequential element o_valid_add_reg was removed.  [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_top.sv:151]
+INFO: [Synth 8-6155] done synthesizing module 'aes_top' (5#1) [F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/aes_top.sv:1]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 796.172 ; gain = 332.812
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 796.172 ; gain = 332.812
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 796.172 ; gain = 332.812
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'aes_top'
+INFO: [Synth 8-5544] ROM "shift_in_reg" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "sub_in_reg" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "reg_mix" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "state_reg" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "round_counter" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                       0000000001 |                             0000
+                    INIT |                       0000000010 |                             0001
+                   SUB_R |                       0000000100 |                             0010
+                 SHIFT_R |                       0000001000 |                             0011
+                   MIX_R |                       0000010000 |                             0100
+                   ADD_R |                       0000100000 |                             0101
+                   SUB_F |                       0001000000 |                             0110
+                 SHIFT_F |                       0010000000 |                             0111
+                   ADD_F |                       0100000000 |                             1000
+                    DONE |                       1000000000 |                             1001
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'aes_top'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:17 . Memory (MB): peak = 966.500 ; gain = 503.141
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 2     
++---XORs : 
+	   2 Input    128 Bit         XORs := 3     
+	   3 Input     32 Bit         XORs := 1     
+	   2 Input     32 Bit         XORs := 30    
+	   4 Input     32 Bit         XORs := 1     
+	   5 Input     32 Bit         XORs := 1     
+	   6 Input     32 Bit         XORs := 1     
+	   7 Input     32 Bit         XORs := 1     
+	   8 Input     32 Bit         XORs := 1     
+	   9 Input     32 Bit         XORs := 1     
+	  10 Input     32 Bit         XORs := 1     
+	  11 Input     32 Bit         XORs := 1     
+	  12 Input     32 Bit         XORs := 1     
+	   2 Input      8 Bit         XORs := 20    
+	   3 Input      8 Bit         XORs := 10    
+	   5 Input      8 Bit         XORs := 6     
+	   4 Input      8 Bit         XORs := 2     
++---Registers : 
+	              128 Bit    Registers := 17    
+	                8 Bit    Registers := 16    
+	                4 Bit    Registers := 2     
++---Muxes : 
+	  10 Input    128 Bit        Muxes := 1     
+	  10 Input     10 Bit        Muxes := 1     
+	   2 Input     10 Bit        Muxes := 6     
+	   2 Input      8 Bit        Muxes := 32    
+	   2 Input      4 Bit        Muxes := 1     
+	  10 Input      4 Bit        Muxes := 1     
+	  10 Input      1 Bit        Muxes := 6     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module aes_top 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 1     
++---XORs : 
+	   2 Input    128 Bit         XORs := 3     
++---Registers : 
+	              128 Bit    Registers := 17    
+	                4 Bit    Registers := 1     
++---Muxes : 
+	  10 Input    128 Bit        Muxes := 1     
+	  10 Input     10 Bit        Muxes := 1     
+	   2 Input     10 Bit        Muxes := 6     
+	  10 Input      4 Bit        Muxes := 1     
+	  10 Input      1 Bit        Muxes := 6     
+Module aes_key_expansion 
+Detailed RTL Component Info : 
++---XORs : 
+	   3 Input     32 Bit         XORs := 1     
+	   2 Input     32 Bit         XORs := 30    
+	   4 Input     32 Bit         XORs := 1     
+	   5 Input     32 Bit         XORs := 1     
+	   6 Input     32 Bit         XORs := 1     
+	   7 Input     32 Bit         XORs := 1     
+	   8 Input     32 Bit         XORs := 1     
+	   9 Input     32 Bit         XORs := 1     
+	  10 Input     32 Bit         XORs := 1     
+	  11 Input     32 Bit         XORs := 1     
+	  12 Input     32 Bit         XORs := 1     
+Module subbytes_generic 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 16    
+	                4 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      8 Bit        Muxes := 16    
+	   2 Input      4 Bit        Muxes := 1     
+Module mixcolumns 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      8 Bit         XORs := 20    
+	   3 Input      8 Bit         XORs := 10    
+	   5 Input      8 Bit         XORs := 6     
+	   4 Input      8 Bit         XORs := 2     
++---Muxes : 
+	   2 Input      8 Bit        Muxes := 16    
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:54 ; elapsed = 00:00:55 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+ROM:
++------------------+---------------+---------------+----------------+
+|Module Name       | RTL Object    | Depth x Width | Implemented As | 
++------------------+---------------+---------------+----------------+
+|aes_key_expansion | sbox_lookup2  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup1  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup0  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup   | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup6  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup5  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup4  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup3  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup10 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup9  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup8  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup7  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup14 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup13 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup12 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup11 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup18 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup17 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup16 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup15 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup22 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup21 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup20 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup19 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup26 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup25 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup24 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup23 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup30 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup29 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup28 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup27 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup34 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup33 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup32 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup31 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup38 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup37 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup36 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup35 | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup2  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup1  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup0  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup   | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup6  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup5  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup4  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup3  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup10 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup9  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup8  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup7  | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup14 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup13 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup12 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup11 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup18 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup17 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup16 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup15 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup22 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup21 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup20 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup19 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup26 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup25 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup24 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup23 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup30 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup29 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup28 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup27 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup34 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup33 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup32 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup31 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup38 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup37 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup36 | 256x8         | LUT            | 
+|aes_key_expansion | sbox_lookup35 | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
+|subbytes_generic  | sbox          | 256x8         | LUT            | 
+|subbytes_generic  | inv_sbox      | 256x8         | LUT            | 
++------------------+---------------+---------------+----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:57 ; elapsed = 00:00:58 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:00 ; elapsed = 00:01:01 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |BUFG  |     1|
+|2     |LUT1  |     1|
+|3     |LUT2  |   465|
+|4     |LUT3  |   272|
+|5     |LUT4  |   301|
+|6     |LUT5  |   396|
+|7     |LUT6  |  2996|
+|8     |MUXF7 |   860|
+|9     |MUXF8 |   300|
+|10    |FDCE  |  2323|
+|11    |FDPE  |     1|
+|12    |IBUF  |   259|
+|13    |OBUF  |   129|
++------+------+------+
+
+Report Instance Areas: 
++------+------------------+------------------+------+
+|      |Instance          |Module            |Cells |
++------+------------------+------------------+------+
+|1     |top               |                  |  8304|
+|2     |  u_key_expansion |aes_key_expansion |  3756|
+|3     |  u_subbytes      |subbytes_generic  |  1041|
++------+------------------+------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+Synthesis Optimization Complete : Time (s): cpu = 00:01:06 ; elapsed = 00:01:07 . Memory (MB): peak = 1242.395 ; gain = 779.035
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.097 . Memory (MB): peak = 1242.395 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1160 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1242.395 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+26 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:13 ; elapsed = 00:01:16 . Memory (MB): peak = 1242.395 ; gain = 803.910
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1242.395 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'F:/Documents/University/year_4/system_design/Hardware/AES_basic/AES_Hardware/AES_basic/AES_basic.runs/synth_1/aes_top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file aes_top_utilization_synth.rpt -pb aes_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 27 22:41:49 2025...
