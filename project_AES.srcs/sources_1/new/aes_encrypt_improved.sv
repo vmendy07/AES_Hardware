@@ -1,0 +1,140 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06.03.2025 10:06:01
+// Design Name: 
+// Module Name: aes_encrypt_improved
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module AES_Cipher_Round_Improved #(
+    parameter WORD  = 32,
+    parameter NB    = 4,
+    parameter FINAL = 0
+) (
+    input  wire               clk, rst,
+    input  wire               i_valid,
+    input  wire [WORD*NB-1:0] i_block,
+    input  wire [WORD*NB-1:0] i_roundkey,
+    output wire               o_valid,
+    output wire [WORD*NB-1:0] o_block
+);
+
+    // Intermediate valid signals
+    wire               sub_valid_shift, shift_valid_regormix, regormix_valid_add;
+    wire [WORD*NB-1:0] sub_block_shift, shift_block_regormix, regormix_block_add;
+
+    // Pipeline registers for key staging
+    reg  [WORD-1:0]    wi_0_staged1, wi_0_staged2, wi_0_staged3;
+    reg  [WORD-1:0]    wi_1_staged1, wi_1_staged2;
+    reg  [WORD-1:0]    wi_2_staged1;
+
+    // SubBytes stage
+    subbytes #(
+        .WORD(WORD),
+        .NB(NB)
+    ) sub (
+        .i_valid(i_valid),
+        .i_block(i_block),
+        .o_valid(sub_valid_shift),
+        .o_block(sub_block_shift)
+    );
+
+    // ShiftRows stage
+    shiftrows #(
+        .WORD(WORD),
+        .NB(NB)
+    ) shift (
+        .i_valid(sub_valid_shift),
+        .i_block(sub_block_shift),
+        .o_valid(shift_valid_regormix),
+        .o_block(shift_block_regormix)
+    );
+
+    // Conditional MixColumns or Direct Pass
+    generate if (FINAL == 0) begin
+        mixcolumns #(
+            .WORD(WORD),
+            .NB(NB)
+        ) mix (
+            .i_valid(shift_valid_regormix),
+            .i_block(shift_block_regormix),
+            .o_valid(regormix_valid_add),
+            .o_block(regormix_block_add)
+        );
+    end
+    else begin
+        // FINAL round: Skip MixColumns, introduce pipeline delay
+        reg               shift_valid_staged1, shift_valid_staged2;
+        reg [WORD*NB-1:0] shift_block_staged1, shift_block_staged2;
+
+        always @(posedge clk) begin
+            if (rst) begin
+                shift_valid_staged1 <= 0;
+                shift_valid_staged2 <= 0;
+            end
+            else begin
+                shift_valid_staged1 <= shift_valid_regormix;
+                shift_valid_staged2 <= shift_valid_staged1;
+            end
+
+            shift_block_staged1 <= shift_block_regormix;
+            shift_block_staged2 <= shift_block_staged1;
+        end
+
+        always_comb begin
+            regormix_valid_add = shift_valid_staged2;
+            regormix_block_add = shift_block_staged2;
+        end
+    end
+    endgenerate
+
+    // AddRoundKey stage
+    addroundkey #(
+        .WORD(WORD),
+        .NB(NB)
+    ) add (
+        .i_valid(regormix_valid_add),
+        .i_block(regormix_block_add),
+        .i_roundkey({wi_0_staged3, wi_1_staged2, wi_2_staged1, i_roundkey[31:0]}),
+        .o_valid(o_valid),
+        .o_block(o_block)
+    );
+
+    // Pipeline registers for key expansion staging
+    always @(posedge clk) begin
+        if (rst) begin
+            wi_0_staged1 <= 0;
+            wi_0_staged2 <= 0;
+            wi_0_staged3 <= 0;
+            wi_1_staged1 <= 0;
+            wi_1_staged2 <= 0;
+            wi_2_staged1 <= 0;
+        end
+        else begin
+            wi_0_staged1 <= i_roundkey[127:96];
+            wi_0_staged2 <= wi_0_staged1;
+            wi_0_staged3 <= wi_0_staged2;
+
+            wi_1_staged1 <= i_roundkey[95:64];
+            wi_1_staged2 <= wi_1_staged1;
+
+            wi_2_staged1 <= i_roundkey[63:32];
+        end
+    end
+
+endmodule
+
