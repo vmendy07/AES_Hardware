@@ -1,0 +1,784 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Apr 18 17:10:41 2025
+# Process ID: 11572
+# Current directory: F:/Documents/University/year_4/system_design/Hardware/AES_2024/AES_2024/AES_2024.runs/synth_1
+# Command line: vivado.exe -log encrypt_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source encrypt_top.tcl
+# Log file: F:/Documents/University/year_4/system_design/Hardware/AES_2024/AES_2024/AES_2024.runs/synth_1/encrypt_top.vds
+# Journal file: F:/Documents/University/year_4/system_design/Hardware/AES_2024/AES_2024/AES_2024.runs/synth_1\vivado.jou
+# Running On        :SuperPC
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22000
+# Processor Detail  :Intel(R) Core(TM) i7-4810MQ CPU @ 2.80GHz
+# CPU Frequency     :2794 MHz
+# CPU Physical cores:4
+# CPU Logical cores :8
+# Host memory       :17053 MB
+# Swap memory       :49655 MB
+# Total Virtual     :66708 MB
+# Available Virtual :54481 MB
+#-----------------------------------------------------------
+source encrypt_top.tcl -notrace
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 514.562 ; gain = 198.867
+Command: synth_design -top encrypt_top -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 42064
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 972.191 ; gain = 454.672
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'encrypt_top' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/encrypt_top.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'subbytes_generic' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/subbytes_generic.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'Sbox' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/sbox.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Sbox' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/sbox.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'subbytes_generic' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/subbytes_generic.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'shiftrows' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/shiftrows.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'shiftrows' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/shiftrows.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'mixcolumns' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/mixcolumns.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'mixcolumns' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/mixcolumns.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'add_roundkey' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/add_roundkey.sv:20]
+INFO: [Synth 8-6155] done synthesizing module 'add_roundkey' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/add_roundkey.sv:20]
+INFO: [Synth 8-6157] synthesizing module 'key_expansion' [F:/Documents/University/year_4/system_design/Hardware/AES_2024/key_expansion.sv:24]
+	Parameter KEY_WORDS bound to: 4 - type: integer 
+	Parameter ROUNDS bound to: 10 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'key_expansion' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/key_expansion.sv:24]
+INFO: [Synth 8-6155] done synthesizing module 'encrypt_top' (0#1) [F:/Documents/University/year_4/system_design/Hardware/AES_2024/encrypt_top.sv:3]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1111.457 ; gain = 593.938
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1111.457 ; gain = 593.938
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1111.457 ; gain = 593.938
+---------------------------------------------------------------------------------
+INFO: [Device 21-9227] Part: xc7a100tcsg324-1 does not have CEAM library.
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:16 . Memory (MB): peak = 1111.457 ; gain = 593.938
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input    128 Bit         XORs := 11    
+	   3 Input     32 Bit         XORs := 1     
+	   2 Input     32 Bit         XORs := 30    
+	   4 Input     32 Bit         XORs := 1     
+	   5 Input     32 Bit         XORs := 1     
+	   6 Input     32 Bit         XORs := 1     
+	   7 Input     32 Bit         XORs := 1     
+	   8 Input     32 Bit         XORs := 1     
+	   9 Input     32 Bit         XORs := 1     
+	  10 Input     32 Bit         XORs := 1     
+	  11 Input     32 Bit         XORs := 1     
+	  12 Input     32 Bit         XORs := 1     
+	   2 Input      8 Bit         XORs := 180   
+	   3 Input      8 Bit         XORs := 90    
+	   5 Input      8 Bit         XORs := 54    
+	   4 Input      8 Bit         XORs := 18    
++---Registers : 
+	              128 Bit    Registers := 1     
++---Muxes : 
+	   2 Input    8 Bit        Muxes := 304   
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:05:43 ; elapsed = 00:06:11 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping Report
++-----------------+-----------------+---------------+----------------+
+|Module Name      | RTL Object      | Depth x Width | Implemented As | 
++-----------------+-----------------+---------------+----------------+
+|Sbox             | sbox            | 256x8         | LUT            | 
+|Sbox             | inv_sbox        | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|key_expansion    | sbox_lookup     | 256x8         | LUT            | 
+|subbytes_generic | sbox15/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox15/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox14/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox14/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox13/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox13/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox12/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox12/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox11/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox11/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox10/sbox     | 256x8         | LUT            | 
+|subbytes_generic | sbox10/inv_sbox | 256x8         | LUT            | 
+|subbytes_generic | sbox9/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox9/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox8/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox8/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox7/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox7/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox6/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox6/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox5/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox5/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox4/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox4/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox3/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox3/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox2/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox2/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox1/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox1/inv_sbox  | 256x8         | LUT            | 
+|subbytes_generic | sbox0/sbox      | 256x8         | LUT            | 
+|subbytes_generic | sbox0/inv_sbox  | 256x8         | LUT            | 
++-----------------+-----------------+---------------+----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:05:49 ; elapsed = 00:06:18 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:05:55 ; elapsed = 00:06:24 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:06:05 ; elapsed = 00:06:34 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:06:05 ; elapsed = 00:06:35 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:06:06 ; elapsed = 00:06:36 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |BUFG  |     1|
+|2     |LUT2  |  1144|
+|3     |LUT3  |   224|
+|4     |LUT4  |   248|
+|5     |LUT5  |   408|
+|6     |LUT6  |  8028|
+|7     |MUXF7 |  3036|
+|8     |MUXF8 |  1452|
+|9     |FDCE  |   128|
+|10    |IBUF  |   258|
+|11    |OBUF  |   128|
++------+------+------+
+
+Report Instance Areas: 
++------+-------------------------------+-------------------+------+
+|      |Instance                       |Module             |Cells |
++------+-------------------------------+-------------------+------+
+|1     |top                            |                   | 15055|
+|2     |  key_exp                      |key_expansion      |  3956|
+|3     |  \main_rounds[0].sub_bytes_r  |subbytes_generic   |  6360|
+|4     |    sbox0                      |Sbox_152           |   394|
+|5     |    sbox1                      |Sbox_153           |   400|
+|6     |    sbox10                     |Sbox_154           |   396|
+|7     |    sbox11                     |Sbox_155           |   401|
+|8     |    sbox12                     |Sbox_156           |   394|
+|9     |    sbox13                     |Sbox_157           |   399|
+|10    |    sbox14                     |Sbox_158           |   395|
+|11    |    sbox15                     |Sbox_159           |   399|
+|12    |    sbox2                      |Sbox_160           |   397|
+|13    |    sbox3                      |Sbox_161           |   400|
+|14    |    sbox4                      |Sbox_162           |   394|
+|15    |    sbox5                      |Sbox_163           |   401|
+|16    |    sbox6                      |Sbox_164           |   395|
+|17    |    sbox7                      |Sbox_165           |   399|
+|18    |    sbox8                      |Sbox_166           |   395|
+|19    |    sbox9                      |Sbox_167           |   401|
+|20    |  \main_rounds[1].sub_bytes_r  |subbytes_generic_0 |   384|
+|21    |    sbox0                      |Sbox_136           |    24|
+|22    |    sbox1                      |Sbox_137           |    24|
+|23    |    sbox10                     |Sbox_138           |    24|
+|24    |    sbox11                     |Sbox_139           |    24|
+|25    |    sbox12                     |Sbox_140           |    24|
+|26    |    sbox13                     |Sbox_141           |    24|
+|27    |    sbox14                     |Sbox_142           |    24|
+|28    |    sbox15                     |Sbox_143           |    24|
+|29    |    sbox2                      |Sbox_144           |    24|
+|30    |    sbox3                      |Sbox_145           |    24|
+|31    |    sbox4                      |Sbox_146           |    24|
+|32    |    sbox5                      |Sbox_147           |    24|
+|33    |    sbox6                      |Sbox_148           |    24|
+|34    |    sbox7                      |Sbox_149           |    24|
+|35    |    sbox8                      |Sbox_150           |    24|
+|36    |    sbox9                      |Sbox_151           |    24|
+|37    |  \main_rounds[2].sub_bytes_r  |subbytes_generic_1 |   384|
+|38    |    sbox0                      |Sbox_120           |    24|
+|39    |    sbox1                      |Sbox_121           |    24|
+|40    |    sbox10                     |Sbox_122           |    24|
+|41    |    sbox11                     |Sbox_123           |    24|
+|42    |    sbox12                     |Sbox_124           |    24|
+|43    |    sbox13                     |Sbox_125           |    24|
+|44    |    sbox14                     |Sbox_126           |    24|
+|45    |    sbox15                     |Sbox_127           |    24|
+|46    |    sbox2                      |Sbox_128           |    24|
+|47    |    sbox3                      |Sbox_129           |    24|
+|48    |    sbox4                      |Sbox_130           |    24|
+|49    |    sbox5                      |Sbox_131           |    24|
+|50    |    sbox6                      |Sbox_132           |    24|
+|51    |    sbox7                      |Sbox_133           |    24|
+|52    |    sbox8                      |Sbox_134           |    24|
+|53    |    sbox9                      |Sbox_135           |    24|
+|54    |  \main_rounds[3].sub_bytes_r  |subbytes_generic_2 |   384|
+|55    |    sbox0                      |Sbox_104           |    24|
+|56    |    sbox1                      |Sbox_105           |    24|
+|57    |    sbox10                     |Sbox_106           |    24|
+|58    |    sbox11                     |Sbox_107           |    24|
+|59    |    sbox12                     |Sbox_108           |    24|
+|60    |    sbox13                     |Sbox_109           |    24|
+|61    |    sbox14                     |Sbox_110           |    24|
+|62    |    sbox15                     |Sbox_111           |    24|
+|63    |    sbox2                      |Sbox_112           |    24|
+|64    |    sbox3                      |Sbox_113           |    24|
+|65    |    sbox4                      |Sbox_114           |    24|
+|66    |    sbox5                      |Sbox_115           |    24|
+|67    |    sbox6                      |Sbox_116           |    24|
+|68    |    sbox7                      |Sbox_117           |    24|
+|69    |    sbox8                      |Sbox_118           |    24|
+|70    |    sbox9                      |Sbox_119           |    24|
+|71    |  \main_rounds[4].sub_bytes_r  |subbytes_generic_3 |   384|
+|72    |    sbox0                      |Sbox_88            |    24|
+|73    |    sbox1                      |Sbox_89            |    24|
+|74    |    sbox10                     |Sbox_90            |    24|
+|75    |    sbox11                     |Sbox_91            |    24|
+|76    |    sbox12                     |Sbox_92            |    24|
+|77    |    sbox13                     |Sbox_93            |    24|
+|78    |    sbox14                     |Sbox_94            |    24|
+|79    |    sbox15                     |Sbox_95            |    24|
+|80    |    sbox2                      |Sbox_96            |    24|
+|81    |    sbox3                      |Sbox_97            |    24|
+|82    |    sbox4                      |Sbox_98            |    24|
+|83    |    sbox5                      |Sbox_99            |    24|
+|84    |    sbox6                      |Sbox_100           |    24|
+|85    |    sbox7                      |Sbox_101           |    24|
+|86    |    sbox8                      |Sbox_102           |    24|
+|87    |    sbox9                      |Sbox_103           |    24|
+|88    |  \main_rounds[5].sub_bytes_r  |subbytes_generic_4 |   384|
+|89    |    sbox0                      |Sbox_72            |    24|
+|90    |    sbox1                      |Sbox_73            |    24|
+|91    |    sbox10                     |Sbox_74            |    24|
+|92    |    sbox11                     |Sbox_75            |    24|
+|93    |    sbox12                     |Sbox_76            |    24|
+|94    |    sbox13                     |Sbox_77            |    24|
+|95    |    sbox14                     |Sbox_78            |    24|
+|96    |    sbox15                     |Sbox_79            |    24|
+|97    |    sbox2                      |Sbox_80            |    24|
+|98    |    sbox3                      |Sbox_81            |    24|
+|99    |    sbox4                      |Sbox_82            |    24|
+|100   |    sbox5                      |Sbox_83            |    24|
+|101   |    sbox6                      |Sbox_84            |    24|
+|102   |    sbox7                      |Sbox_85            |    24|
+|103   |    sbox8                      |Sbox_86            |    24|
+|104   |    sbox9                      |Sbox_87            |    24|
+|105   |  \main_rounds[6].sub_bytes_r  |subbytes_generic_5 |   384|
+|106   |    sbox0                      |Sbox_56            |    24|
+|107   |    sbox1                      |Sbox_57            |    24|
+|108   |    sbox10                     |Sbox_58            |    24|
+|109   |    sbox11                     |Sbox_59            |    24|
+|110   |    sbox12                     |Sbox_60            |    24|
+|111   |    sbox13                     |Sbox_61            |    24|
+|112   |    sbox14                     |Sbox_62            |    24|
+|113   |    sbox15                     |Sbox_63            |    24|
+|114   |    sbox2                      |Sbox_64            |    24|
+|115   |    sbox3                      |Sbox_65            |    24|
+|116   |    sbox4                      |Sbox_66            |    24|
+|117   |    sbox5                      |Sbox_67            |    24|
+|118   |    sbox6                      |Sbox_68            |    24|
+|119   |    sbox7                      |Sbox_69            |    24|
+|120   |    sbox8                      |Sbox_70            |    24|
+|121   |    sbox9                      |Sbox_71            |    24|
+|122   |  \main_rounds[7].sub_bytes_r  |subbytes_generic_6 |   384|
+|123   |    sbox0                      |Sbox_40            |    24|
+|124   |    sbox1                      |Sbox_41            |    24|
+|125   |    sbox10                     |Sbox_42            |    24|
+|126   |    sbox11                     |Sbox_43            |    24|
+|127   |    sbox12                     |Sbox_44            |    24|
+|128   |    sbox13                     |Sbox_45            |    24|
+|129   |    sbox14                     |Sbox_46            |    24|
+|130   |    sbox15                     |Sbox_47            |    24|
+|131   |    sbox2                      |Sbox_48            |    24|
+|132   |    sbox3                      |Sbox_49            |    24|
+|133   |    sbox4                      |Sbox_50            |    24|
+|134   |    sbox5                      |Sbox_51            |    24|
+|135   |    sbox6                      |Sbox_52            |    24|
+|136   |    sbox7                      |Sbox_53            |    24|
+|137   |    sbox8                      |Sbox_54            |    24|
+|138   |    sbox9                      |Sbox_55            |    24|
+|139   |  \main_rounds[8].sub_bytes_r  |subbytes_generic_7 |   384|
+|140   |    sbox0                      |Sbox_24            |    24|
+|141   |    sbox1                      |Sbox_25            |    24|
+|142   |    sbox10                     |Sbox_26            |    24|
+|143   |    sbox11                     |Sbox_27            |    24|
+|144   |    sbox12                     |Sbox_28            |    24|
+|145   |    sbox13                     |Sbox_29            |    24|
+|146   |    sbox14                     |Sbox_30            |    24|
+|147   |    sbox15                     |Sbox_31            |    24|
+|148   |    sbox2                      |Sbox_32            |    24|
+|149   |    sbox3                      |Sbox_33            |    24|
+|150   |    sbox4                      |Sbox_34            |    24|
+|151   |    sbox5                      |Sbox_35            |    24|
+|152   |    sbox6                      |Sbox_36            |    24|
+|153   |    sbox7                      |Sbox_37            |    24|
+|154   |    sbox8                      |Sbox_38            |    24|
+|155   |    sbox9                      |Sbox_39            |    24|
+|156   |  sub_bytes_final              |subbytes_generic_8 |  1152|
+|157   |    sbox0                      |Sbox               |    72|
+|158   |    sbox1                      |Sbox_9             |    66|
+|159   |    sbox10                     |Sbox_10            |    96|
+|160   |    sbox11                     |Sbox_11            |    80|
+|161   |    sbox12                     |Sbox_12            |    68|
+|162   |    sbox13                     |Sbox_13            |    60|
+|163   |    sbox14                     |Sbox_14            |    68|
+|164   |    sbox15                     |Sbox_15            |    60|
+|165   |    sbox2                      |Sbox_16            |    70|
+|166   |    sbox3                      |Sbox_17            |    60|
+|167   |    sbox4                      |Sbox_18            |    72|
+|168   |    sbox5                      |Sbox_19            |    66|
+|169   |    sbox6                      |Sbox_20            |    70|
+|170   |    sbox7                      |Sbox_21            |    64|
+|171   |    sbox8                      |Sbox_22            |    94|
+|172   |    sbox9                      |Sbox_23            |    86|
++------+-------------------------------+-------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+Synthesis Optimization Complete : Time (s): cpu = 00:06:08 ; elapsed = 00:06:37 . Memory (MB): peak = 1939.965 ; gain = 1422.445
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.366 . Memory (MB): peak = 1939.965 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4488 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1939.965 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: b5d985bc
+INFO: [Common 17-83] Releasing license: Synthesis
+27 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:06:15 ; elapsed = 00:06:45 . Memory (MB): peak = 1939.965 ; gain = 1425.402
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.093 . Memory (MB): peak = 1939.965 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'F:/Documents/University/year_4/system_design/Hardware/AES_2024/AES_2024/AES_2024.runs/synth_1/encrypt_top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file encrypt_top_utilization_synth.rpt -pb encrypt_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Apr 18 17:17:42 2025...
