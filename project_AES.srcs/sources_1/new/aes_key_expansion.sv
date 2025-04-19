@@ -1,27 +1,5 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 28.03.2025 18:05:40
-// Design Name: 
-// Module Name: aes_key_expansion
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
 // Organisation: University of Sheffield
 // Engineer: EBranners
 // 
@@ -39,64 +17,71 @@
 // Revision History:
 //   Rev 0.2 - Improved modularity and commenting
 //   Rev 0.3 - Updated key expansion to output a vector of round keys.
+//   Rev 0.4 - Flip between key order for encrypt/decrypt done in-module
 // Additional Notes:
 //   The implementation supports variable key sizes via parameters.
 //////////////////////////////////////////////////////////////////////////////////
 
-module aes_key_expansion #(parameter KEY_WORDS = 4, parameter ROUNDS = 10)(
-    input  [0:(KEY_WORDS*32)-1] seed_key, // Original AES key (e.g. 128 bits for AES-128)
-    output reg [127:0] expanded_keys [0:ROUNDS] // Array of round keys; each element is 128 bits (round key)
+module aes_key_expansion #(
+    parameter KEY_WORDS = 4,
+    parameter ROUNDS = 10
+)(
+    input  encrypt, // 1 = encryption (forward order), 0 = decryption (reversed order)
+    input  [0:(KEY_WORDS*32)-1] seed_key,
+    output reg [127:0] expanded_keys [0:ROUNDS]
 );
 
-// Internal registers for key expansion (we build the complete schedule as an array of 32-bit words)
+// Internal registers
 reg [31:0] key_schedule [0:(4*(ROUNDS+1))-1];
-reg [31:0] temp_word;      // Temporary word storage
-reg [31:0] rotated;        // Stores the rotated key word
-reg [31:0] substituted;    // Holds S-Box processed word
-reg [31:0] round_const;    // Round constant for key expansion
+reg [31:0] temp_word, rotated, substituted, round_const;
+integer i, j;
 
-integer i, j;  // Iteration indices
+// Key expansion generation
+reg [127:0] internal_keys [0:ROUNDS];
 
-// Key expansion always block 
 always @* begin
-    // Initialize first KEY_WORDS (e.g. 4 for AES-128) words from seed_key.
-    // The seed_key is assumed to be packed as 4 consecutive 32-bit words.
+    // Initialise first KEY_WORDS words
     for (i = 0; i < KEY_WORDS; i = i + 1) begin
-        // Extract 32-bit slice (using the +: operator to get a 32-bit chunk)
         key_schedule[i] = seed_key[32*i +: 32];
     end
 
-    // Generate the rest of the key schedule words
+    // Generate key schedule
     for (j = KEY_WORDS; j < 4*(ROUNDS+1); j = j + 1) begin
         temp_word = key_schedule[j-1];
-        // Perform the key schedule core every KEY_WORDS words
         if (j % KEY_WORDS == 0) begin
             rotated = rotate_word(temp_word);
             substituted = apply_sbox(rotated);
             round_const = round_constant(j / KEY_WORDS);
             key_schedule[j] = key_schedule[j - KEY_WORDS] ^ (substituted ^ round_const);
         end 
-        // For keys larger than AES-128, extra S-Box processing is done for j mod KEY_WORDS == 4.
         else if (KEY_WORDS > 6 && (j % KEY_WORDS == 4)) begin
             key_schedule[j] = key_schedule[j - KEY_WORDS] ^ apply_sbox(temp_word);
         end 
-        // Otherwise, the new word is the XOR of the corresponding word KEY_WORDS back and the previous word.
         else begin
             key_schedule[j] = key_schedule[j - KEY_WORDS] ^ temp_word;
         end
     end
 
-    // Reassemble the key schedule words into an array of 128-bit round keys.
-    // Each round key consists of 4 consecutive 32-bit words.
+    // Assemble round keys into internal_keys
     for (i = 0; i <= ROUNDS; i = i + 1) begin
-        expanded_keys[i] = { key_schedule[i*4],
-                             key_schedule[i*4 + 1],
-                             key_schedule[i*4 + 2],
-                             key_schedule[i*4 + 3] };
+        internal_keys[i] = {
+            key_schedule[i*4],
+            key_schedule[i*4 + 1],
+            key_schedule[i*4 + 2],
+            key_schedule[i*4 + 3]
+        };
+    end
+
+    // Assign expanded_keys with mux logic based on encryption/decryption
+    for (i = 0; i <= ROUNDS; i = i + 1) begin
+        if (encrypt)
+            expanded_keys[i] = internal_keys[i];           // Normal order for encryption
+        else
+            expanded_keys[i] = internal_keys[ROUNDS - i];  // Reversed order for decryption
     end
 end
 
-// Function: Cyclically shift a 32-bit word left by 8 bits (rotate bytes)
+// Rotate a word left by 1 byte
 function [31:0] rotate_word;
     input [31:0] word_in;
     begin
@@ -104,26 +89,20 @@ function [31:0] rotate_word;
     end
 endfunction
 
-// Function: Apply S-Box substitution to each byte of the word
+// Apply S-Box to a word
 function [31:0] apply_sbox;
     input [31:0] word;
     reg [7:0] b0, b1, b2, b3;
     begin
-        // Split the 32-bit word into four 8-bit bytes
         b0 = word[31:24];
         b1 = word[23:16];
         b2 = word[15:8];
         b3 = word[7:0];
-        // Substitute each byte using the sbox_lookup function
-        apply_sbox = { sbox_lookup(b0),
-                       sbox_lookup(b1),
-                       sbox_lookup(b2),
-                       sbox_lookup(b3) };
+        apply_sbox = { sbox_lookup(b0), sbox_lookup(b1), sbox_lookup(b2), sbox_lookup(b3) };
     end
 endfunction
 
-// Function: Round constant lookup function.
-// Returns the appropriate round constant based on the round index.
+// Round constant lookup
 function [31:0] round_constant;
     input integer round_index;
     begin
