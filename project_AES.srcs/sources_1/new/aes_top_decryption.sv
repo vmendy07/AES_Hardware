@@ -1,25 +1,54 @@
 //(* use_dsp48 = "yes" *) // Review for usefulness when it comes to inv_mix_column
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: University of Sheffield - Department of EEE
+// Engineer: EBranners
 // 
 // Create Date: 30.03.2025 15:46:30
-// Design Name: 
-// Module Name: aes_decryption_top_tb
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Design Name: AES-128 Hardware Decryption Core
+// Module Name: aes_decrypt_top
+// Project Name: AES Hardware Encryption and Decryption System
+// Target Devices: Xilinx Artix-7 (Nexys4 DDR)
+// Tool Versions: Vivado 2021.2+
 // Description: 
+//   Top-level AES decryption controller. Implements FSM-based iterative datapath
+//   for AES-128 decryption using standard AES reverse transformations:
+//   InvSubBytes, InvShiftRows, InvMixColumns, and AddRoundKey. Key expansion is 
+//   done externally using a dedicated key schedule module. Includes round counter, 
+//   state registers, and valid-handshake-driven submodule interactions.
 // 
+//   Uses handshake signalling to ensure correct pipeline sequencing between 
+//   transformations and captures output at each stage. Final decrypted plaintext 
+//   is output along with a valid signal.
+//
 // Dependencies: 
+//   - subbytes_generic.sv (used in reverse mode for InvSubBytes)
+//   - inv_shiftrows.sv
+//   - inv_mixcolumns.sv
+//   - add_roundkey.sv
+//   - aes_key_expansion.sv
+//
+// Revision History:
+//   Rev 0.01 - [30.03.2025] Initial template created.
+//   Rev 0.02 - [02.04.2025] FSM structure added with basic submodule stubs.
+//   Rev 0.03 - [04.04.2025] Added handshaking logic for all submodules.
+//   Rev 0.04 - [05.04.2025] Fixed bug with round_keys capture on `i_start`.
+//   Rev 0.05 - [06.04.2025] Integrated working subbytes_generic module for inverse mode.
+//   Rev 0.06 - [07.04.2025] Debugged and confirmed correctness of InvMixColumns block.
+//   Rev 0.07 - [08.04.2025] Corrected update timing for `state_reg` during INV_MIX_R stage.
+//   Rev 0.08 - [09.04.2025] Added FSM stage for INIT and rewired round 10 key to match decryption start.
+//   Rev 0.09 - [11.04.2025] Improved reg capture order for pipeline stage output (reg_shift, reg_sub, etc.).
+//   Rev 0.10 - [13.04.2025] Introduced valid signal (`o_valid`) generation in DONE state.
+//   Rev 0.11 - [15.04.2025] Confirmed correct AddRoundKey timing using latch-and-hold logic.
+//   Rev 0.12 - [17.04.2025] Reworked FSM transition to eliminate premature state change during handshakes.
+//   Rev 0.13 - [19.04.2025] Added final formatting, comments, and refactoring for submission.
 // 
-// Revision:
-// Revision 0.01 - File Created
 // Additional Comments:
+//   - DSP48 hint added for potential performance boost during MixColumns.
+//   - Module written using SystemVerilog constructs (e.g., typedef enum, always_ff).
+//   - May benefit from pipelining in future versions to improve throughput.
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module aes_decrypt_top (
     input  logic         clk,
