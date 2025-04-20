@@ -29,9 +29,9 @@ module inv_shiftrows #(
     parameter NB   = 4,      // Number of columns (matrix is NB x NB)
     parameter WORD = 8       // Size of each byte in bits
 )(
-    input  logic               i_valid,
+    // input  logic               i_valid,
     input  logic [NB*NB*WORD-1:0] i_block,  // 128-bit input state
-    output logic               o_valid,
+    // output logic               o_valid,
     output logic [NB*NB*WORD-1:0] o_block   // 128-bit output state
 );
 
@@ -67,6 +67,6 @@ module inv_shiftrows #(
                        b12, b9,  b6,  b3 };  // Column 3
 
     // Output valid signal is directly tied to input valid
-    assign o_valid = i_valid;
+    // assign o_valid = i_valid;
 
 endmodule

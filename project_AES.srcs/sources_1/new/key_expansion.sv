@@ -4,8 +4,8 @@
 // Engineer: EBranners
 // 
 // Date Created: 18.01.2025 17:41:16
-// Design Title: AES Key Expansion
-// Module Name: aes_key_expansion
+// Design Title: Key Expansion
+// Module Name: key_expansion
 // Project: AES Implementation
 // Target Devices: FPGA 
 // Tool Version: Xilinx Vivado 2021.2
@@ -22,7 +22,7 @@
 //   The implementation supports variable key sizes via parameters.
 //////////////////////////////////////////////////////////////////////////////////
 
-module aes_key_expansion #(
+module key_expansion #(
     parameter KEY_WORDS = 4,
     parameter ROUNDS = 10
 )(

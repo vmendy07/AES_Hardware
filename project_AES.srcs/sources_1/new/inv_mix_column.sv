@@ -31,9 +31,9 @@ module inv_mixcolumns #(
     parameter WORD = 8       // Size of each byte in bits
 )(
     input  wire [NB*NB*WORD-1:0] i_block,  // 128-bit input state
-    input  wire                  i_valid,
-    output logic [NB*NB*WORD-1:0] o_block,  // 128-bit output state
-    output logic                  o_valid
+    // input  wire                  i_valid,
+    output logic [NB*NB*WORD-1:0] o_block  // 128-bit output state
+    // output logic                  o_valid
 );
 
   // Function: Multiply in GF(2^8) by 2
@@ -124,7 +124,7 @@ module inv_mixcolumns #(
                      r0_2, r1_2, r2_2, r3_2,
                      r0_3, r1_3, r2_3, r3_3 };
 
-  // Pass the valid signal
-  assign o_valid = i_valid;
+  // // Pass the valid signal
+  // assign o_valid = i_valid;
 
 endmodule
