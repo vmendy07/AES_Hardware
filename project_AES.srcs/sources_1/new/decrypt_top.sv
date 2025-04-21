@@ -10,7 +10,7 @@ module decrypt_top (
 
     // Internal signals for the AES state through different rounds
     reg [127:0] state [0:10];         // States after each round (0-10)
-    wire [127:0] round_keys [0:10];   // Round keys for each round
+    logic [127:0] round_keys [0:10];   // Round keys for each round
     
     // Generate all round keys from the initial key
     key_expansion #(
@@ -54,11 +54,19 @@ module decrypt_top (
                 .state_out(inv_sub_bytes_out_wire)
             );
             
+             // AddRoundKey operation
+            add_roundkey add_round_key_r (
+                .state(inv_sub_bytes_out_r),
+                .round_key(round_keys[r]),
+                .state_out(inv_mix_columns_out_wire)
+            );
+
             // InvMixColumns operation
             inv_mixcolumns inv_mix_columns_r (
-                .i_block(inv_sub_bytes_out_r),
-                .o_block(inv_mix_columns_out_wire)
+                .i_block(inv_mix_columns_out_wire),
+                .o_block(state[r])
             );
+            
 
             always @(posedge clk or posedge rst) begin
                 if (rst) begin
@@ -72,12 +80,7 @@ module decrypt_top (
                 end
             end
             
-            // AddRoundKey operation
-            add_roundkey add_round_key_r (
-                .state(inv_mix_columns_out_r),
-                .round_key(round_keys[r]),
-                .state_out(state[r])
-            );
+
         end
     endgenerate
     

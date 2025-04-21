@@ -55,7 +55,7 @@ module tb_key_expansion;
     initial begin
         // Test Case 1: Standard 128-bit AES key for encryption
         encrypt = 1;  // Set to encryption mode
-        seed_key = 128'h2b7e151628aed2a6abf7158809cf4f3c;  
+        seed_key = 128'h000102030405060708090a0b0c0d0e0f;  
         #10;  
         display_expanded_key;
 
