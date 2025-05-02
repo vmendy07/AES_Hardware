@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module decrypt_top_10_stream;
+module tb_decrypt_top_10_stream;
 
     // Testbench signals
     reg clk;
