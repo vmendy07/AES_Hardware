@@ -27,18 +27,27 @@ module tb_decrypt_top_10_stream;
     reg [127:0] ciphertext;
     reg [127:0] key;
     wire [127:0] plaintext;
+    reg input_valid;
+    wire data_valid;
+    reg [127:0] received_plaintexts [0:9];
 
     // Arrays to hold ciphertexts and expected plaintexts
     reg [127:0] ciphertexts [0:9];
     reg [127:0] expected_plaintexts [0:9];
 
+    // Arrays to track when inputs are sent and outputs are received
+    integer input_cycles [0:9];
+    integer output_cycles [0:9];
+
     // Instantiate the AES decryption top module
     decrypt_top uut (
         .clk(clk),
         .rst(rst),
+        .input_valid(input_valid),
         .ciphertext(ciphertext),
         .key(key),
-        .plaintext(plaintext)
+        .plaintext(plaintext),
+        .data_valid(data_valid)
     );
 
     // Clock generation
@@ -49,9 +58,15 @@ module tb_decrypt_top_10_stream;
 
     // Test sequence
     initial begin
+        integer out_idx;
+        integer in_idx;
+        integer cycle_count;
+
         // Initialize inputs
         rst = 1;
         key = 128'h000102030405060708090a0b0c0d0e0f;
+        input_valid = 0;
+        ciphertext = 0;
 
         // Initialize ciphertexts
         ciphertexts[0] = 128'h3071708ffd2412229b2677ba5f1c52d2; // Example ciphertext
@@ -80,31 +95,61 @@ module tb_decrypt_top_10_stream;
         // Apply reset
         #10 rst = 0;
 
-        // Stream of 10 data inputs
-        for (int i = 0; i < 10; i++) begin
-            // Wait for one clock cycle
+        // Stream of 10 data inputs with gaps, input_valid high for 1 cycle per input
+        in_idx = 0;
+        cycle_count = 0;
+        while (in_idx < 10) begin
             @(posedge clk);
-            // Apply the next ciphertext
-            ciphertext = ciphertexts[i];
+            // Example: send input on cycles 0, 2, 5, 9, 10, 15, 20, 21, 30, 40
+            if (cycle_count == 0  ||
+                cycle_count == 2  ||
+                cycle_count == 5  ||
+                cycle_count == 9  ||
+                cycle_count == 10 ||
+                cycle_count == 15 ||
+                cycle_count == 20 ||
+                cycle_count == 21 ||
+                cycle_count == 30 ||
+                cycle_count == 40) begin
+                ciphertext = ciphertexts[in_idx];
+                input_valid = 1; // Assert for 1 cycle
+                input_cycles[in_idx] = cycle_count;
+                in_idx++;
+            end else begin
+                input_valid = 0; // Deassert otherwise
+            end
+            cycle_count++;
+        end
+        // Deassert input_valid after last input
+        @(posedge clk);
+        input_valid = 0;
+
+        // Wait for all outputs to be valid and collect them
+        out_idx = 0;
+        while (out_idx < 10) begin
+            @(posedge clk);
+            if (data_valid) begin
+                received_plaintexts[out_idx] = plaintext;
+                output_cycles[out_idx] = cycle_count;
+                out_idx++;
+            end
+            cycle_count++;
         end
 
-        // Wait for the decryption to complete for the last input
-        #100;
-
-        // Wait until plaintext is no longer unknown
-        wait (plaintext !== 128'hXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX);
-
-        // Check the resulting plaintext
+        // Check the resulting plaintexts and timing
         for (int i = 0; i < 10; i++) begin
-            if (plaintext === expected_plaintexts[i]) begin
-                $display("Test %0d Passed: Plaintext matches expected value.", i);
+            if (received_plaintexts[i] === expected_plaintexts[i]) begin
+                $display("Test %0d Passed: Plaintext matches expected value. Expected: %h, Got: %h", i, expected_plaintexts[i], received_plaintexts[i]);
             end else begin
-                $display("Test %0d Failed: Plaintext does not match expected value.", i);
-                $display("Expected: %h, Got: %h", expected_plaintexts[i], plaintext);
+                $display("Test %0d Failed: Plaintext does not match expected value. Expected: %h, Got: %h", i, expected_plaintexts[i], received_plaintexts[i]);
+            end
+            if (output_cycles[i] - input_cycles[i] == 49) begin
+                $display("Timing %0d Passed: Output appeared 49 cycles after input. Input cycle: %0d, Output cycle: %0d", i, input_cycles[i], output_cycles[i]);
+            end else begin
+                $display("Timing %0d Failed: Output appeared %0d cycles after input (expected 49). Input cycle: %0d, Output cycle: %0d", i, output_cycles[i] - input_cycles[i], input_cycles[i], output_cycles[i]);
             end
         end
         #250;
-        // Finish the simulation
         $finish;
     end
 
